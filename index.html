@@ -27,13 +27,32 @@
             text-decoration: none;
             background: rgba(0, 255, 0, 0.2);
             border-bottom: 1px #0f0 solid;
-            padding: 2px;
+            padding: 2px 2px 1px 2px;
             margin: -2px;
+            line-height: 1rem;
+            display: inline-block;
+            transition: all 100ms ease-out;
+            box-sizing: border-box;
+        }
+
+        a:hover {
+            color: #000;
+            background: rgba(0, 255, 0, 1);
+            margin: -4px;
+            padding: 4px 4px 3px 4px;
+        }
+
+        a:active {
+            color: #000;
+            background: rgba(0, 255, 0, 1);
+            margin: 0;
+            padding: 0;
+            border: 0;
         }
 
         hr {
             border: 1px #0f0 solid;
-            margin: 0 0 2rem 0;
+            margin: 2rem 0;
         }
 
         h1 {
@@ -59,8 +78,11 @@
 
     <body>
 
-        <h1>The Panic Express<br>
-            <small>Homepage of John Aivaliotis</small></h1>
+        <h1>
+            The Panic Express<br>
+            <small>Homepage of John Aivaliotis</small>
+        </h1>
+        <p style="margin-top: -1rem"><a href="https://www.linkedin.com/in/jdaiv/">LinkedIn</a> &middot; <a href="https://github.com/jdaiv/">GitHub</a></p>
         <hr>
         <h2>Personal Projects</h2>
         <p><em>Soon&trade;</em></p>
