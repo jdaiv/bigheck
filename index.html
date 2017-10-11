@@ -10,6 +10,48 @@
 
         body {
             font-family: 'Inconsolata', monospace;
+            color: #0f0;
+            background: #000;
+            padding: 2rem;
+            font-size: 16px;
+        }
+
+        p {
+            font-size: 1rem;
+            line-height: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        a {
+            color: #0f0;
+            text-decoration: none;
+            background: rgba(0, 255, 0, 0.2);
+            border-bottom: 1px #0f0 solid;
+            padding: 2px;
+            margin: -2px;
+        }
+
+        hr {
+            border: 1px #0f0 solid;
+            margin: 0 0 2rem 0;
+        }
+
+        h1 {
+            font-size: 4rem;
+            line-height: 3rem;
+            text-transform: uppercase;
+            margin: 2rem 0;
+        }
+
+        h1 > small {
+            font-size: 2rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin: 1rem 0;
+            line-height: 2rem;
+            text-transform: uppercase;
         }
 
         </style>
@@ -17,7 +59,12 @@
 
     <body>
 
-        <h1>The Panic Express</h1>
-
+        <h1>The Panic Express<br>
+            <small>Homepage of John Aivaliotis</small></h1>
+        <hr>
+        <h2>Personal Projects</h2>
+        <p><em>Soon&trade;</em></p>
+        <h2>Experiments</h2>
+        <p><a href="/js-exp/galaxer/">JS Canvas Assortment</a> - Test of various JS APIs: canvas, audio and webgl.</p>
     </body>
 </html>
