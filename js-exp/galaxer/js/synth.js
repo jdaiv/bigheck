@@ -320,8 +320,8 @@ var PRG_SYNTH = function () {
 
     function release_channel (chan) {
         chan.free = true
-        chan.gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + instrument.release)
-        chan.gain.gain.setValueAtTime(0.0, ctx.currentTime + instrument.release)
+        chan.gain.gain.linearRampToValueAtTime(0, ctx.currentTime + instrument.release)
+        // chan.gain.gain.setValueAtTime(0.0, ctx.currentTime + instrument.release)
     }
 
     self.init = function (sys, display) {

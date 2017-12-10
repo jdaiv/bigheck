@@ -4,6 +4,10 @@ var PRG_SYS = function () {
     var self = this
     self.name = '???'
 
+    self.keydown = function (evt) {
+        s.ready = true
+    }
+
     self.init = function (sys, display) {
         d = display
         s = sys
