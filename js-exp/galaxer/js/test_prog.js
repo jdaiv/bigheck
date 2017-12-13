@@ -138,6 +138,7 @@ var PRG_CHARMAP = function () {
                 20 + (i % 16) * 12,
                 20 + (i - (i % 16)) / 16 * 12)
         }
+        d.text('ESC to exit', 8, d.height - 16)
     }
 
     self.exit = function () {
@@ -222,11 +223,12 @@ var PRG_CONSOLE = function () {
 
     self.draw = function () {
         d.clear()
+        d.text('type "quit()" to exit', 4, 4)
         if (Math.floor(cursor_blink) % 2)
-            d.text('> ' + text + '_', 4, 4)
+            d.text('> ' + text + '_', 4, 16)
         else
-            d.text('> ' + text, 4, 4)
-        d.text(result.toString(), 4, 14)
+            d.text('> ' + text, 4, 16)
+        d.text(result.toString(), 4, 30)
     }
 
     self.exit = function () {

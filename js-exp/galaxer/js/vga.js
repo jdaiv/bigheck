@@ -184,7 +184,8 @@ var VGA = function () {
     }
 
     self.clear = function () {
-        self.ctx.clearRect(0, 0, self.width, self.height)
+        self.ctx.fillStyle = '#000'
+        self.ctx.fillRect(0, 0, self.width, self.height)
     }
 
     self.clear_overlay = function () {

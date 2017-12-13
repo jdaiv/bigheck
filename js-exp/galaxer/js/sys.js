@@ -123,6 +123,8 @@ var PRG_BOOT = function () {
         d.text('\x18/\x19: change selection', x, y)
         y += 10
         d.text('ENTER: run option', x, y)
+        y += 10
+        d.text('\\: break', x, y)
     }
 
     self.exit = function () {

@@ -351,7 +351,7 @@ var PRG_SYNTH = function () {
         // backing_channel.gain.gain.setValueAtTime(0.3, 0)
     }
 
-    var arp_steps = [0, 4, 7]
+    var arp_steps = [0, 4, 7, 4]
     // var arp_steps = [0, 4, 7, 12, 16, 19, 24, 28, 31]
     var arp_dist = 3
     var arp_count = 0
@@ -385,7 +385,7 @@ var PRG_SYNTH = function () {
         visuals = visuals.slice(remove_first, visuals.length)
 
         if (instrument.arp) {
-            arp_count += dt * instrument_options.arp_speed
+            arp_count += dt * instrument.arp_speed
             if (arp_count >= arp_steps.length) arp_count = 0
             var step = Math.floor(arp_count)
             channels.forEach(function (chan) {
