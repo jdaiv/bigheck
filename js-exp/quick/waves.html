@@ -27,6 +27,7 @@
             background: none;
             padding: 1rem;
             font-size: 16px;
+            line-height: 1;
             width: 502px;
             color: #0f0;
             margin-top: 1rem;
@@ -35,13 +36,16 @@
             color: #000;
             background: #0f0;
         }
+        input.error {
+            color: #f00;
+        }
         </style>
     </head>
 
     <body>
         <canvas id="canvas" width="500" height="120"></canvas>
         <form>
-            <input id="formula" value="Math.sin(Math.cos(t * 4) + Math.sin(t * 2) + t)">
+            <input id="formula">
             <input type="submit" value="Eval">
         </form>
         <script>
@@ -49,12 +53,24 @@
             var canvas = document.getElementById('canvas')
             var ctx = canvas.getContext('2d')
             var input = document.getElementById('formula')
-            var formula = input.value
+            input.value = localStorage.getItem('wave_formula') ||
+                'Math.sin(Math.cos(t * 4) + Math.sin(t * 2) + t)'
+            var formula = new Function('t', 'return ' + input.value)
             var form = document.getElementsByTagName('form')[0]
 
             form.onsubmit = function (e) {
                 e.preventDefault()
-                formula = input.value
+                try {
+                    input.classList.remove('error')
+                    formula = new Function('t', 'return ' + input.value)
+                } catch (e) {
+                    input.classList.add('error')
+                }
+                try {
+                    localStorage.setItem('wave_formula', input.value)
+                } catch (e) {
+                    console.log('no local storage')
+                }
                 return false
             }
 
@@ -76,10 +92,9 @@
                 ctx.fillRect(0, size, width, 1)
                 ctx.globalAlpha = 1
                 ctx.beginPath()
-                var _f = new Function('t', 'return ' + formula)
                 for (var x = 0; x < width; x++) {
                     var t = (x / 10) + (_t / 1000)
-                    var y = _f(t) * size
+                    var y = formula(t) * size
                     if (x > 0)
                         ctx.lineTo(x, y)
                     else
