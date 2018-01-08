@@ -8,9 +8,11 @@ var APPS = [
     ['synth \x0E', PRG_SYNTH],
 ]
 
+var sys
+var startup_prg = new PRG_SYS()
 function run () {
-    var sys = new PANIC_EXPRESS()
-    sys.next_program = new PRG_SYS()
+    sys = new PANIC_EXPRESS()
+    sys.next_program = startup_prg
     sys.init()
 }
 

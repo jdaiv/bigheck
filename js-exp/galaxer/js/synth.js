@@ -21,6 +21,7 @@ var PRG_SYNTH = function () {
         'sawtooth',
         'triangle',
         'square',
+        'none',
     ]
 
     var current_option = 0
@@ -130,6 +131,18 @@ var PRG_SYNTH = function () {
     function play (key, note, octaves, type2) {
         if (octaves == null) octaves = 0
         if (notes_playing[key]) return null
+
+        if (type2) {
+            if (instrument.type_2 == 'none') {
+                return
+            }
+        } else {
+            play(key + '_2', note, 0, true)
+            if (instrument.type == 'none') {
+                return
+            }
+        }
+
         var channel
         if (channel = get_free_channel()) {
             channel.gain.gain.linearRampToValueAtTime(instrument.gain,
@@ -159,95 +172,70 @@ var PRG_SYNTH = function () {
         })
     }
 
+    var space_down = false
+
     self.keydown = function (evt) {
         var option = instrument_options[current_option]
         switch (evt.code) {
             case 'KeyQ':
-                play(evt.code, 0)
+                play(evt.code, -5)
                 break
             case 'Digit2':
-                play(evt.code, 1)
+                play(evt.code, -4)
                 break
             case 'KeyW':
-                play(evt.code, 2)
+                play(evt.code, -3)
                 break
             case 'Digit3':
-                play(evt.code, 3)
+                play(evt.code, -2)
                 break
             case 'KeyE':
-                play(evt.code, 4)
+                play(evt.code, -1)
                 break
             case 'KeyR':
-                play(evt.code, 5)
+                play(evt.code, 0)
                 break
             case 'Digit5':
-                play(evt.code, 6)
+                play(evt.code, 1)
                 break
             case 'KeyT':
-                play(evt.code, 7)
+                play(evt.code, 2)
                 break
             case 'Digit6':
-                play(evt.code, 8)
+                play(evt.code, 3)
                 break
             case 'KeyY':
-                play(evt.code, 9)
-                break
-            case 'Digit7':
-                play(evt.code, 10)
+                play(evt.code, 4)
                 break
             case 'KeyU':
-                play(evt.code, 11)
+                play(evt.code, 5)
+                break
+            case 'Digit8':
+                play(evt.code, 6)
                 break
             case 'KeyI':
-                play(evt.code, 12)
+                play(evt.code, 7)
                 break
             case 'Digit9':
-                play(evt.code, 13)
+                play(evt.code, 8)
                 break
             case 'KeyO':
-                play(evt.code, 14)
+                play(evt.code, 9)
                 break
             case 'Digit0':
-                play(evt.code, 15)
+                play(evt.code, 10)
                 break
             case 'KeyP':
-                play(evt.code, 16)
+                play(evt.code, 11)
                 break
-            case 'KeyZ':
-                play(evt.code, 12, 1, true)
+            case 'BracketLeft':
+                play(evt.code, 12)
                 break
-            case 'KeyS':
-                play(evt.code, 13, 1, true)
+            case 'Equal':
+                play(evt.code, 13)
                 break
-            case 'KeyX':
-                play(evt.code, 14, 1, true)
-                break
-            case 'KeyD':
-                play(evt.code, 15, 1, true)
-                break
-            case 'KeyC':
-                play(evt.code, 16, 1, true)
-                break
-            case 'KeyV':
-                play(evt.code, 17, 1, true)
-                break
-            case 'KeyG':
-                play(evt.code, 18, 1, true)
-                break
-            case 'KeyB':
-                play(evt.code, 19, 1, true)
-                break
-            case 'KeyH':
-                play(evt.code, 20, 1, true)
-                break
-            case 'KeyN':
-                play(evt.code, 21, 1, true)
-                break
-            case 'KeyJ':
-                play(evt.code, 22, 1, true)
-                break
-            case 'KeyM':
-                play(evt.code, 23, 1, true)
+            case 'BracketRight':
+                play(evt.code, 14)
                 break
             case 'PageUp':
                 if (octave < 7) octave++
@@ -278,6 +266,9 @@ var PRG_SYNTH = function () {
                     options_visible = false
                 }
                 break
+            case 'Space':
+                space_down = true
+                break
         }
     }
 
@@ -285,6 +276,13 @@ var PRG_SYNTH = function () {
         if (notes_playing[evt.code]) {
             release_channel(notes_playing[evt.code].channel)
             notes_playing[evt.code] = null
+        }
+        if (notes_playing[evt.code + '_2']) {
+            release_channel(notes_playing[evt.code + '_2'].channel)
+            notes_playing[evt.code + '_2'] = null
+        }
+        if (evt.code == 'Space') {
+            space_down = false
         }
     }
 
@@ -384,7 +382,7 @@ var PRG_SYNTH = function () {
         })
         visuals = visuals.slice(remove_first, visuals.length)
 
-        if (instrument.arp) {
+        if (instrument.arp || space_down) {
             arp_count += dt * instrument.arp_speed
             if (arp_count >= arp_steps.length) arp_count = 0
             var step = Math.floor(arp_count)
@@ -398,6 +396,11 @@ var PRG_SYNTH = function () {
             last_arp = step
         } else {
             arp_count = 0
+            channels.forEach(function (chan) {
+                if (chan != backing_channel && chan.gain.gain.value > 0) {
+                    chan.osc.frequency.setValueAtTime(notes[chan.note], 0)
+                }
+            })
         }
 
         // backing_timer += dt

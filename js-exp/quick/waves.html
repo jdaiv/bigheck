@@ -1,0 +1,96 @@
+<html>
+
+    <head>
+        <title>Wave Generator</title>
+        <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Consolas', 'Menlo', 'Monaco', 'Bitstream Vera Sans Mono', 'DejaVu Sans Mono', 'Courier New', monospace;
+            color: #0f0;
+            background: #000;
+            padding: 2rem;
+            font-size: 16px;
+        }
+        input, canvas {
+            border: 1px #0f0 solid;
+            box-shadow: 4px 4px 0 rgba(0, 255, 0, 0.4);
+        }
+        canvas {
+            display: block;
+        }
+        input {
+            display: block;
+            outline: 0;
+            font-family: 'Consolas', 'Menlo', 'Monaco', 'Bitstream Vera Sans Mono', 'DejaVu Sans Mono', 'Courier New', monospace;
+            background: none;
+            padding: 1rem;
+            font-size: 16px;
+            width: 502px;
+            color: #0f0;
+            margin-top: 1rem;
+        }
+        input[type=submit]:hover {
+            color: #000;
+            background: #0f0;
+        }
+        </style>
+    </head>
+
+    <body>
+        <canvas id="canvas" width="500" height="120"></canvas>
+        <form>
+            <input id="formula" value="Math.sin(Math.cos(t * 4) + Math.sin(t * 2) + t)">
+            <input type="submit" value="Eval">
+        </form>
+        <script>
+
+            var canvas = document.getElementById('canvas')
+            var ctx = canvas.getContext('2d')
+            var input = document.getElementById('formula')
+            var formula = input.value
+            var form = document.getElementsByTagName('form')[0]
+
+            form.onsubmit = function (e) {
+                e.preventDefault()
+                formula = input.value
+                return false
+            }
+
+            var raf = window.requestAnimationFrame(loop)
+
+            function loop (_t) {
+                var width = canvas.width
+                var height = canvas.height
+                ctx.clearRect(0, 0, width, height)
+                ctx.lineWidth = 2
+                ctx.lineJoin = 'round'
+                ctx.strokeStyle = ctx.fillStyle = '#0f0'
+                ctx.save()
+                ctx.translate(0, Math.floor(height / 2))
+                ctx.globalAlpha = 0.2
+                var size = 40
+                ctx.fillRect(0, 0, width, 1)
+                ctx.fillRect(0, -size, width, 1)
+                ctx.fillRect(0, size, width, 1)
+                ctx.globalAlpha = 1
+                ctx.beginPath()
+                var _f = new Function('t', 'return ' + formula)
+                for (var x = 0; x < width; x++) {
+                    var t = (x / 10) + (_t / 1000)
+                    var y = _f(t) * size
+                    if (x > 0)
+                        ctx.lineTo(x, y)
+                    else
+                        ctx.moveTo(x, y)
+                }
+                ctx.stroke()
+                ctx.restore()
+                window.requestAnimationFrame(loop)
+            }
+
+        </script>
+    </body>
+
+</html>
