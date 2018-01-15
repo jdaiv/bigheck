@@ -4,18 +4,6 @@ var PRG_SYNTH = function () {
     var self = this
     self.name = 'SYNTH'
 
-    var instrument = {
-        arp: false,
-        arp_speed: 50,
-        type: 'sine',
-        type_2: 'sine',
-        type_idx: 0,
-        type_2_idx: 0,
-        attack: 0.05,
-        gain: 0.1,
-        release: 0.3
-    }
-
     var types = [
         'sine',
         'sawtooth',
@@ -24,105 +12,14 @@ var PRG_SYNTH = function () {
         'none',
     ]
 
-    var current_option = 0
-    var options_visible = false
-    var instrument_options = [
-        {
-            name: 'arp',
-            type: 'bool',
-            default: false
-        },
-        {
-            name: 'arp_speed',
-            type: 'num',
-            min: 0,
-            max: 100,
-            inc: 5,
-            default: 50
-        },
-        {
-            name: 'type',
-            type: 'select',
-            values: types,
-            default: 0
-        },
-        {
-            name: 'type_2',
-            type: 'select',
-            values: types,
-            default: 0
-        },
-        {
-            name: 'attack',
-            type: 'num',
-            min: 0,
-            max: 1,
-            inc: 0.05,
-            default: 1
-        },
-        {
-            name: 'gain',
-            type: 'num',
-            min: 0,
-            max: 1,
-            inc: 0.05,
-            default: 0.1
-        },
-        {
-            name: 'release',
-            type: 'num',
-            min: 0,
-            max: 1,
-            inc: 0.05,
-            default: 1
-        },
-    ]
-
-    function inc_option (option) {
-        var value = instrument[option.name]
-        switch (option.type) {
-            case 'bool':
-                instrument[option.name] = !value
-                break
-            case 'select':
-                value = instrument[option.name + '_idx']
-
-                if (value < option.values.length - 1) value++
-                else value = 0
-                instrument[option.name] = option.values[value]
-
-                instrument[option.name + '_idx'] = value
-                break
-            case 'num':
-                if (value < option.max)
-                    instrument[option.name] = Math.floor(
-                        (instrument[option.name] + option.inc) * 100) / 100
-                break
-        }
-    }
-
-    function dec_option (option) {
-        var value = instrument[option.name]
-        switch (option.type) {
-            case 'bool':
-                instrument[option.name] = !value
-                break
-            case 'select':
-                value = instrument[option.name + '_idx']
-
-                if (value > 0) value--
-                else value = option.values.length - 1
-                instrument[option.name] = option.values[value]
-
-                instrument[option.name + '_idx'] = value
-                break
-            case 'num':
-                if (value > option.min)
-                    instrument[option.name] = Math.floor(
-                        (instrument[option.name] - option.inc) * 100) / 100
-                break
-        }
-    }
+    var menu = new TOOL_QUICK_MENU()
+    menu.add_bool('arp', false)
+    menu.add_num('arp_speed', 50, 0, 100, 5)
+    menu.add_select('type', types, 0)
+    menu.add_select('type_2', types, 0)
+    menu.add_num('attack', 0.05, 0, 1, 0.05)
+    menu.add_num('gain', 0.1, 0, 1, 0.05)
+    menu.add_num('release', 0.3, 0, 1, 0.05)
 
     var notes_playing = []
     var visuals = []
@@ -133,25 +30,25 @@ var PRG_SYNTH = function () {
         if (notes_playing[key]) return null
 
         if (type2) {
-            if (instrument.type_2 == 'none') {
+            if (menu.data.type_2 == 'none') {
                 return
             }
         } else {
             play(key + '_2', note, 0, true)
-            if (instrument.type == 'none') {
+            if (menu.data.type == 'none') {
                 return
             }
         }
 
         var channel
         if (channel = get_free_channel()) {
-            channel.gain.gain.linearRampToValueAtTime(instrument.gain,
-                ctx.currentTime + instrument.attack)
-            channel.gain.gain.setValueAtTime(instrument.gain,
-                ctx.currentTime + instrument.attack)
+            channel.gain.gain.linearRampToValueAtTime(menu.data.gain,
+                ctx.currentTime + menu.data.attack)
+            channel.gain.gain.setValueAtTime(menu.data.gain,
+                ctx.currentTime + menu.data.attack)
             note += 12 * (octave + octaves)
             var freq = notes[note]
-            channel.osc.type = type2 ? instrument.type_2 : instrument.type
+            channel.osc.type = type2 ? menu.data.type_2 : menu.data.type
             channel.osc.frequency.setValueAtTime(freq, 0)
             channel.note = note
             notes_playing[key] = {
@@ -175,7 +72,9 @@ var PRG_SYNTH = function () {
     var space_down = false
 
     self.keydown = function (evt) {
-        var option = instrument_options[current_option]
+        if (menu.keydown(evt)) {
+            return
+        }
         switch (evt.code) {
             case 'KeyQ':
                 play(evt.code, -5)
@@ -243,29 +142,8 @@ var PRG_SYNTH = function () {
             case 'PageDown':
                 if (octave > 0) octave--
                 break
-            case 'ArrowDown':
-                if (current_option < instrument_options.length - 1)
-                    current_option++
-                break
-            case 'ArrowUp':
-                if (current_option > 0) current_option--
-                break
-            case 'ArrowLeft':
-                dec_option(option)
-                break
-            case 'ArrowRight':
-                inc_option(option)
-                break
-            case 'Enter':
-                options_visible = !options_visible
-                break
             case 'Escape':
-                if (!options_visible) {
-                    s.next_program = new PRG_BOOT()
-                } else {
-                    options_visible = false
-                }
-                break
+                s.next_program = new PRG_BOOT()
             case 'Space':
                 space_down = true
                 break
@@ -318,8 +196,8 @@ var PRG_SYNTH = function () {
 
     function release_channel (chan) {
         chan.free = true
-        chan.gain.gain.linearRampToValueAtTime(0, ctx.currentTime + instrument.release)
-        // chan.gain.gain.setValueAtTime(0.0, ctx.currentTime + instrument.release)
+        chan.gain.gain.linearRampToValueAtTime(0, ctx.currentTime + menu.data.release)
+        // chan.gain.gain.setValueAtTime(0.0, ctx.currentTime + menu.data.release)
     }
 
     self.init = function (sys, display) {
@@ -382,8 +260,8 @@ var PRG_SYNTH = function () {
         })
         visuals = visuals.slice(remove_first, visuals.length)
 
-        if (instrument.arp || space_down) {
-            arp_count += dt * instrument.arp_speed
+        if (menu.data.arp || space_down) {
+            arp_count += dt * menu.data.arp_speed
             if (arp_count >= arp_steps.length) arp_count = 0
             var step = Math.floor(arp_count)
             channels.forEach(function (chan) {
@@ -421,10 +299,6 @@ var PRG_SYNTH = function () {
 
     var x_scroll = 0
 
-    function pad_space (str, start) {
-        return ('                   ' + str).substring(start + str.length);
-    }
-
     self.draw = function () {
         // d.clear()
 
@@ -448,28 +322,7 @@ var PRG_SYNTH = function () {
             }
         }
 
-        if (options_visible) {
-            d.ctx.globalAlpha = 0.8
-            d.ctx.fillStyle = '#000'
-            d.ctx.fillRect(8, 8, 184, instrument_options.length * 8 + 32)
-            d.ctx.globalAlpha = 1
-            var y = 8
-            d.text('\xDA\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xBF', 8, y)
-            y += 8
-            d.text('\xB3 OPTIONS             \xB3', 8, y)
-            y += 8
-            d.text('\xC3\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xB4', 8, y)
-            y += 8
-            instrument_options.forEach(function (opt, idx) {
-                var value = instrument[opt.name].toString()
-                d.text(
-                    '\xB3 ' + opt.name + ': ' + pad_space(current_option == idx ?
-                        '\x1B' + value + '\x1A' : value + ' ', opt.name.length + 2) + ' \xB3',
-                    8, y)
-                y += 8
-            })
-            d.text('\xC0\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xD9', 8, y)
-        }
+        menu.draw(d)
 
         d.ctx.fillStyle = '#000'
         d.ctx.fillRect(0, d.height - 16, d.width, 16)

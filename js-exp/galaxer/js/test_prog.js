@@ -9,11 +9,19 @@ var PRG_RAINBOWS = function () {
         s = sys
     }
 
+    var menu = new TOOL_QUICK_MENU()
+    menu.add_num('steps', 12, 1, 100, 1)
+    menu.add_num('speed', 1000, 100, 5000, 100)
+    menu.add_num('wack', 0, 0, 100, 1)
+    menu.add_bool('text', true)
+
     self.keydown = function (evt) {
+        if (menu.keydown(evt)) return
+
         if (evt.code == 'Escape') {
             s.next_program = new PRG_BOOT()
         } else {
-            s.set_error(self, 'unimplemented')
+            // s.set_error(self, 'unimplemented')
         }
     }
 
@@ -22,8 +30,8 @@ var PRG_RAINBOWS = function () {
     var t = 0
     var _dt = 0
     self.loop = function (dt) {
-        t += dt * 1000
-        color_increment(dt * 1000);
+        t += dt * menu.data.speed
+        color_increment(dt * menu.data.speed)
         _dt = dt
     }
 
@@ -35,46 +43,64 @@ var PRG_RAINBOWS = function () {
 
         // d.clear()
 
-        var steps = 40
+        var steps = menu.data.steps
         var __dt = _dt / steps
-        for (var i = steps - 1; i >= 0; i--) {
+
+        var _color_current = color_current
+
+        for (var i = 0; i < steps; i++) {
             var _t = t - __dt * i
             var x_offset = Math.sin(_t / 200) * 20
             var y_offset = Math.cos(_t / 400) * 20
             // var scale = 1 - (0.012 + Math.cos(_t / 1000) * 0.01) / steps
-            var scale = 1 - (0.05 / steps)
+            var scale = 1 - (0.1 / steps)
             var rotation =  Math.sin(_t / 400) * (0.1 / steps)
             d.ctx.save();
             d.ctx.translate(width_2 + x_offset, height_2 + y_offset);
             d.ctx.rotate(rotation);
-            d.ctx.scale(scale, scale);
+            var wack = (menu.data.wack / 100) / steps
+            d.ctx.scale(scale * (Math.sin(_t / 1000) * wack + 1), scale * (Math.cos(_t / 1000) * wack + 1));
             d.ctx.drawImage(d.main.canvas, -width_2 - x_offset, -height_2 - y_offset);
             d.ctx.restore();
+
+            color_current = (_color_current + __dt / 10) % 360
+            var x_pos = 0;
+            var box_size = 1;
+
+            color_set_fill(1, 0.5);
+            d.ctx.fillRect(x_pos, 0, width, box_size);
+            d.ctx.fillRect(0, x_pos, box_size, height);
+            color_set_fill_i(1, 0.5);
+            d.ctx.fillRect(x_pos, height - box_size, width, box_size);
+            d.ctx.fillRect(width - box_size , x_pos, box_size, height);
         }
 
-        var x_pos = 0;
-        var box_size = 8;
+        if (menu.data.text) {
+            var text_x = Math.round(Math.sin(t / 800) * width_2 / 2) + width_2
+            var text_y = height - Math.round(Math.abs(Math.sin(t / 260)) * 50) - 16
+            rainbow_text('\x03 rainbows \x03', text_x, text_y)
+        }
 
-        color_set_fill(1, 0.5);
-        d.ctx.fillRect(x_pos, 0, width, box_size);
-        d.ctx.fillRect(0, x_pos, box_size, height);
-        color_set_fill_i(1, 0.5);
-        d.ctx.fillRect(x_pos, height - box_size, width, box_size);
-        d.ctx.fillRect(width - box_size , x_pos, box_size, height);
+        if (t < 3000) {
+            rainbow_text('press enter for menu!', width_2, 8)
+        }
 
-        d.text_color('#000')
-        var text_x = Math.round(Math.sin(t / 800) * width_2 / 2) + width_2 - 32
-        var text_y = height - Math.round(Math.abs(Math.sin(t / 260)) * 50)
-        d.text('RAINBOWS', text_x - 1, text_y - 16)
-        d.text('RAINBOWS', text_x + 1, text_y - 16)
-        d.text('RAINBOWS', text_x, text_y - 17)
-        d.text('RAINBOWS', text_x, text_y - 15)
-        d.text_color(color_str((color_current) % 360, 1, 0.5))
-        d.text('RAINBOWS', text_x, text_y - 16)
+        menu.draw(d)
     }
 
     self.exit = function () {
 
+    }
+
+    function rainbow_text(text, x, y) {
+        var center_x = Math.floor(text.length * 9 / 2)
+        d.text_color('#000')
+        d.text(text, x - 1 - center_x, y)
+        d.text(text, x + 1 - center_x, y)
+        d.text(text, x - center_x, y - 1)
+        d.text(text, x - center_x, y + 1)
+        d.text_color(color_str((color_current) % 360, 1, 0.5))
+        d.text(text, x - center_x, y)
     }
 
     var color_current = 0;
