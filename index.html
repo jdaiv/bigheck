@@ -4,84 +4,11 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=1.0, minimum-scale=1.0, maximum-scale=1.0">
         <title>The Panic Express</title>
-        <style>
-
-        /*! normalize.css v7.0.0 | MIT License | github.com/necolas/normalize.css */
-        html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,footer,header,nav,section{display:block}h1{font-size:2em;margin:.67em 0}figcaption,figure,main{display:block}figure{margin:1em 40px}hr{box-sizing:content-box;height:0;overflow:visible}pre{font-family:monospace,monospace;font-size:1em}a{background-color:transparent;-webkit-text-decoration-skip:objects}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:inherit}b,strong{font-weight:bolder}code,kbd,samp{font-family:monospace,monospace;font-size:1em}dfn{font-style:italic}mark{background-color:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}audio,video{display:inline-block}audio:not([controls]){display:none;height:0}img{border-style:none}svg:not(:root){overflow:hidden}button,input,optgroup,select,textarea{font-family:sans-serif;font-size:100%;line-height:1.15;margin:0}button,input{overflow:visible}button,select{text-transform:none}[type=reset],[type=submit],button,html [type=button]{-webkit-appearance:button}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0}[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:1px dotted ButtonText}fieldset{padding:.35em .75em .625em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}progress{display:inline-block;vertical-align:baseline}textarea{overflow:auto}[type=checkbox],[type=radio]{box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-cancel-button,[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}details,menu{display:block}summary{display:list-item}canvas{display:inline-block}template{display:none}[hidden]{display:none}
-
-        body {
-            font-family: 'Consolas', 'Menlo', 'Monaco', 'Bitstream Vera Sans Mono', 'DejaVu Sans Mono', 'Courier New', monospace;
-            color: #0f0;
-            background: #000;
-            padding: 2rem;
-            font-size: 16px;
-        }
-
-        p {
-            font-size: 1rem;
-            line-height: 1.5rem;
-            margin: 1rem 0;
-        }
-
-        a {
-            color: #0f0;
-            text-decoration: none;
-            background: rgba(0, 255, 0, 0.2);
-            border-bottom: 1px #0f0 solid;
-            padding: 2px 2px 1px 2px;
-            margin: -2px;
-            line-height: 1rem;
-            display: inline-block;
-            transition: all 100ms ease-out;
-            box-sizing: border-box;
-        }
-
-        a:hover {
-            color: #000;
-            background: rgba(0, 255, 0, 1);
-            margin: -4px;
-            padding: 4px 4px 3px 4px;
-        }
-
-        a:active {
-            color: #000;
-            background: rgba(0, 255, 0, 1);
-            margin: 0;
-            padding: 0;
-            border: 0;
-        }
-
-        hr {
-            border: 1px #0f0 solid;
-            margin: 2rem 0;
-        }
-
-        h1 {
-            font-size: 4rem;
-            line-height: 3.5rem;
-            text-transform: uppercase;
-            margin: 2rem 0;
-        }
-
-        h1 > small {
-            font-size: 2rem;
-            display: block;
-            line-height: 2rem;
-            margin-top: 1rem;
-        }
-
-        h2 {
-            font-size: 2rem;
-            margin: 1rem 0;
-            line-height: 2rem;
-            text-transform: uppercase;
-        }
-
-        </style>
+        <link rel="stylesheet" type="text/css" href="style.css">
     </head>
 
     <body>
-
+        <div id="railroad"></div>
         <h1>
             The Panic Express
             <small>Homepage of John Aivaliotis</small>
@@ -89,11 +16,78 @@
         <p style="margin-top: -1rem"><a href="https://www.twitter.com/panicexp">Twitter</a> &middot; <a href="https://www.linkedin.com/in/jdaiv/">LinkedIn</a> &middot; <a href="https://github.com/jdaiv/">GitHub</a></p>
         <hr>
         <h2>Personal Projects</h2>
-        <p><em>Soon&trade;</em></p>
+        <p>Here's some things I've worked (mostly) solo on. You can probably tell I like to persue games in my free time.
+        <h3 class="project">(2015) SPOON<small> - <a href="/ld32/">Play It!</a></small></h3>
+        <dl>
+            <dt>Type</dt>
+            <dd>Browser Game</dd>
+            <dt>Length</dt>
+            <dd>72 Hours</dd>
+            <dt>Technologies</dt>
+            <dd>Playground.js &middot; Canvas</dd>
+            <dt>Description</dt>
+            <dd>Made for Ludum Dare 32 Jam. This was my first JS game, and my first major personal JS project.
+            My lack of sleep led me to implement entirely too much screen shake.</dd>
+        </dl>
+        <h3 class="project">(2015) Bomb Game<small><!--  - <a href="">Play It!</a> --></small></h3>
+        <dl>
+            <dt>Type</dt>
+            <dd>Game</dd>
+            <dt>Length</dt>
+            <dd>2 weeks</dd>
+            <dt>Technologies</dt>
+            <dd>Unity &middot; C#</dd>
+            <dt>Description</dt>
+            <dd>~todo~</dd>
+        </dl>
+        <h3 class="project">(2015) SFConsole<small><!--  - <a href="">Download It!</a> --></small></h3>
+        <dl>
+            <dt>Type</dt>
+            <dd>Unity Package</dd>
+            <dt>Length</dt>
+            <dd>Ongoing</dd>
+            <dt>Technologies</dt>
+            <dd>Unity &middot; C#</dd>
+            <dt>Description</dt>
+            <dd>~todo~</dd>
+        </dl>
+        <p>More <em>Soon&trade;</em></p>
+        <hr>
+        <h2>Stuff I've Worked On</h2>
+        <p>These are projects I've worked on in paid positions, and are able/allowed to show off!</p>
+        <h3 class="project">(2016) Modular Labs<small> - <a href="https://modularlabs.com.au/">See It!</a></small></h3>
+        <dl>
+            <dt>Type</dt>
+            <dd>Website</dd>
+            <dt>Length</dt>
+            <dd>2 Weeks</dd>
+            <dt>Technologies</dt>
+            <dd>Vanilla JS &middot; Canvas</dd>
+            <dt>Description</dt>
+            <dd></dd>
+        </dl>
+        <h3 class="project">(2017) StrathAyr Turfulator<small> - <a href="http://www.strathayr.com/turfulator/">Use It!</a></small></h3>
+        <dl>
+            <dt>Type</dt>
+            <dd>Website Fragment</dd>
+            <dt>Length</dt>
+            <dd>3 Weeks</dd>
+            <dt>Technologies</dt>
+            <dd>Vanilla JS &middot; Google Maps</dd>
+            <dt>Description</dt>
+            <dd></dd>
+        </dl>
+        <hr>
         <h2>Experiments</h2>
-        <p><a href="/js-exp/galaxer/">JS Canvas Assortment</a> - Test of various JS APIs: canvas, audio and webgl.</p>
+        <p>Dumping ground for weird projects that haven't gone anywhere.</p>
+        <p>(2017) - <a href="/js-exp/galaxer/">JS Canvas Assortment</a> - Test of various JS APIs: canvas, audio and webgl.</p>
+        <hr>
         <h2>Tools</h2>
-        <p><a href="/js-exp/quick/waves.html">Waveform Vis</a></p>
+        <p>Small tools, normally made for personal use.</p>
+        <p>(2017) - <a href="/js-exp/quick/waves.html">Waveform Vis</a> - Small tool to quickly visualize JS waveform functions.</p>
         <p style="margin-top: 4rem"><small>This page doesn't track you.</small></p>
+
+        <div id="my-boy"></div>
+        <script type="text/javascript" src="scribbles.js"></script>
     </body>
 </html>
