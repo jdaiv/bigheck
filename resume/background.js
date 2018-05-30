@@ -17,18 +17,32 @@ function rect (el) {
     }
 }
 
+let bg = []
+
 function draw (t) {
     if (resize) {
         canvas.width = Math.floor(window.innerWidth / 2)
         canvas.height = Math.floor(window.innerHeight / 2)
         canvas.style.width = canvas.width * 2 + 'px'
         canvas.style.height = canvas.height * 2 + 'px'
+
+        bg = []
+        for (var x = 0; x < canvas.width; x++) {
+            bg.push(Math.sin(x/ 100) + Math.random())
+        }
+
         dirty = true
         resize = false
     }
 
-    if (t) {
+    for (var x = 0; x < canvas.width; x++) {
+        bg[x] += Math.random() / 500
+    }
 
+    if (t) {
+        // ctx.drawImage(canvas,
+        //    0, 0, canvas.width, canvas.height,
+        //    Math.sin(t / 400) * 5, Math.cos(t / 100) * 5, canvas.width, canvas.height)
     }
 
     if (dirty) {
@@ -44,7 +58,7 @@ function draw (t) {
     }
 
     if (t) {
-        const v = 50
+        const v = 20
         // for (var x = 0; x < canvas.width; x += v) {
         //     ctx.drawImage(canvas,
         //        x, 0, v, canvas.height,
@@ -79,7 +93,7 @@ function drawBanner (r, t) {
     const ANGLE = 8
 
     ctx.lineWidth = 1
-    ctx.strokeStyle = 'black'
+    ctx.strokeStyle = '#fee761'
 
     function drawLine (x, y) {
         ctx.fillRect(x, y, LINE_WIDTH, r.height)
@@ -87,20 +101,20 @@ function drawBanner (r, t) {
         ctx.strokeRect(x, y + r.height - 3, LINE_WIDTH, 0)
     }
 
-    ctx.fillStyle = '#8b9bb4'
+    ctx.fillStyle = '#9e2835'
     const start = ((PADDING + 50) / ANGLE) * 2
-    for (var x = PADDING + 50 - LINE_WIDTH; x >= PADDING; x -= LINE_WIDTH) {
+    for (var x = PADDING + 50 - LINE_WIDTH; x >= PADDING - LINE_WIDTH; x -= LINE_WIDTH) {
         drawLine(x,
             yOffset(x) + start - Math.floor(x / ANGLE))
     }
 
-    ctx.fillStyle = '#3a4466'
+    ctx.fillStyle = '#3f2832'
     for (var x = PADDING * 2; x < PADDING + 50; x += LINE_WIDTH) {
         drawLine(x, yOffset(x) + Math.floor(x / ANGLE))
     }
 
-    ctx.fillStyle = '#c0cbdc'
-    for (var x = PADDING * 2; x < cr.width - PADDING; x += LINE_WIDTH) {
+    ctx.fillStyle = '#e43b44'
+    for (var x = PADDING + LINE_WIDTH; x < cr.width - PADDING; x += LINE_WIDTH) {
         drawLine(x, yOffset(x))
     }
 
@@ -112,6 +126,10 @@ function drawBanner (r, t) {
 
 function rand (n) {
     return Math.random() * (n * 2) - n
+}
+
+function randColor () {
+    return `hsl(${Math.random() * 360}, 50%, 50%)`
 }
 
 function drawRect (r) {

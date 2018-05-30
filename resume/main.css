@@ -3,11 +3,11 @@
 }
 
 html {
+    background: url('background.png');
+    background-position: center;
     font-family: 'Share', cursive;
     font-size: 8px;
     overflow-x: hidden;
-    background: rgb(73,0,208);
-    background: linear-gradient(180deg, rgba(73,0,208,1) 0%, rgba(0,5,24,1) 100%);
     min-height: 100vh;
 }
 
@@ -77,14 +77,19 @@ section > * {
 
 ul {
     margin: 0;
-    list-style: '+';
-    padding-left: 2rem;
+    list-style: none;
+    padding-left: 0.5rem;
 }
 
 ul > li {
     margin: 0;
     padding: 0 1rem 1rem 1rem;
     line-height: 1.2;
+}
+
+ul > li:before {
+    content: '+';
+    margin-right: 1rem;
 }
 
 .columns h2 {
@@ -198,7 +203,7 @@ h1 > small {
 }
 
 #stats > .primary {
-    flex: 35%;
+    flex: 30%;
     text-align: center;
 }
 
@@ -208,8 +213,12 @@ h1 > small {
 
 #stats > .primary > div {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-end;
     margin-top: 2rem;
+    border-radius: 0.5rem;
+    border: 1px solid black;
 }
 
 #stats > .primary > div:first-of-type {
@@ -220,25 +229,46 @@ h1 > small {
     font-size: 2rem;
     padding: 0.5rem;
     text-transform: uppercase;
+    flex: 100%;
     order: 2;
-    border: 1px solid black;
-    border-radius: 0 0 0.5rem 0.5rem;
+    border-top: 1px solid black;
     background: rgba(0, 0, 0, 0.1);
 }
 
-#stats > .primary > div > p {
-    font-size: 5rem;
-    text-transform: uppercase;
-    border-radius: 0.5rem 0.5rem 0 0;
-    border: 1px solid black;
-    border-bottom: 0;
-    font-family: 'Coming Soon', cursive;
-    line-height: 1;
-    padding: 1.5rem 0 1rem 0;
+#stats > .primary > div > div {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+    flex: 30%;
+    margin: 2rem 0.5rem;
 }
 
+#stats > .primary > div > .score {
+    font-size: 5rem;
+    text-transform: uppercase;
+    font-family: 'Coming Soon', cursive;
+    line-height: 1;
+    display: inline-block;
+    /*padding: 1.5rem 0 1rem 0;*/
+}
+
+#stats > .primary > div > .mod {
+    font-family: 'Coming Soon', cursive;
+    font-size: 3rem;
+    padding-bottom: 1rem;
+}
+
+#stats > .primary > div > .mod:before {
+    font-family: monospace;
+    content: '(';
+}
+
+#stats > .primary > div > .mod:after {
+    font-family: monospace;
+    content: ')';
+}
+
+
 #stats > .skills {
-    flex: 60%;
+    flex: 70%;
     margin-left: 2rem;
 }
 
@@ -252,6 +282,37 @@ h1 > small {
     border-bottom: 1px solid rgba(0,0,0,0.5);
 }
 
+#stats > .skills ul > li:before {
+    content: '';
+    margin: 0;
+}
+
 #personality, #photo {
     flex-grow: 0;
+}
+
+#exp p {
+    line-height: 1.5;
+    margin-bottom: 1rem;
+}
+
+@media(max-width: 500px) {
+    .container {
+        padding: 4rem 0.5rem;
+    }
+    .columns > .column {
+        min-width: 250px;
+    }
+    #stats > .primary {
+        flex-basis: 20%;
+    }
+    #stats > .primary > div > h3 {
+        font-size: 1.5rem;
+    }
+    #stats > .primary > div > .score {
+        font-size: 4rem;
+    }
+    #stats > .primary > div > .mod {
+        font-size: 2rem;
+    }
 }
