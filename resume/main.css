@@ -1,0 +1,257 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-family: 'Share', cursive;
+    font-size: 8px;
+    overflow-x: hidden;
+    background: rgb(73,0,208);
+    background: linear-gradient(180deg, rgba(73,0,208,1) 0%, rgba(0,5,24,1) 100%);
+    min-height: 100vh;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+canvas {
+    position: fixed;
+    z-index: -1;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: pixelated;
+}
+
+.container {
+    margin: 0 auto;
+    padding: 4rem;
+    width: 100%;
+    max-width: 1200px;
+    font-size: 2rem;
+    line-height: 2rem;
+    z-index: 4;
+}
+
+.columns {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.columns > .column {
+    flex: 1;
+    min-width: 350px;
+    display: flex;
+    justify-content: stretch;
+    flex-direction: column;
+}
+
+.columns > .column > section {
+    margin: 1rem;
+    padding: 4rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-content: stretch;
+    align-items: stretch;
+    justify-content: flex-start;
+    flex: 1 1 auto;
+}
+
+section > * {
+    flex: 1;
+}
+
+.paper {
+    margin: 0 0 2rem 0;
+    font-family: 'Coming Soon', cursive;
+    /*border: 1px black solid;*/
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background: #743f3944;
+}
+
+.paper h3 {
+    text-transform: none;
+    font-size: 2rem;
+}
+
+ul {
+    margin: 0;
+    list-style: '+';
+    padding-left: 2rem;
+}
+
+ul > li {
+    margin: 0;
+    padding: 0 1rem 1rem 1rem;
+    line-height: 1.2;
+}
+
+.columns h2 {
+    border-top: 1px solid rgba(0,0,0,0.5);
+    text-align: center;
+    margin: 0;
+    padding: 2rem 1rem 1rem 1rem;
+}
+
+h2 {
+    font-size: 2rem;
+    text-transform: uppercase;
+    width: 100%;
+    display: block;
+    order: 2;
+    flex: 0 !important;
+}
+
+h3 {
+    margin: 0;
+    /*text-align: center;*/
+    font-size: 1.5rem;
+    text-transform: uppercase;
+}
+
+p {
+    margin: 0;
+    line-height: 1.5;
+}
+
+img {
+    width: 100%;
+    border-radius: 1rem;
+    margin-bottom: 2rem;
+    flex: 0;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+header > * {
+
+}
+
+header > h1 {
+    margin: 2rem;
+    padding: 2rem 4rem;
+    line-height: 1.2;
+    flex: 0 1 auto;
+    min-width: 320px;
+    text-align: center;
+    font-family: 'Coming Soon', cursive;
+}
+
+h1 > small {
+    font-family: 'Share', cursive;
+    display: block;
+}
+
+#personal_details {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: stretch;
+    align-items: stretch;
+    margin: 1rem;
+    padding: 4rem 2rem;
+}
+
+#personal_details > div {
+    flex: 1 1 25%;
+    margin: 1rem 2rem;
+    display: flex;
+    flex-direction: column;
+    min-width: 150px;
+}
+
+#personal_details > div > p {
+    border-bottom: 1px solid black;
+    margin-bottom: 0.5rem;
+    font-family: 'Coming Soon', cursive;
+}
+
+#personal_details > div > h2 {
+    text-align: left;
+    margin: 0;
+}
+
+#stats {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: row;
+    align-content: stretch;
+}
+
+#stats > * {
+    display: flex;
+    flex-direction: column;
+}
+
+#stats > * > * {
+    flex: 1 1 auto;
+}
+
+#stats > * > h2 {
+    flex: 0;
+}
+
+#stats > .primary {
+    flex: 35%;
+    text-align: center;
+}
+
+#stats > .primary > h2 {
+    display: none;
+}
+
+#stats > .primary > div {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
+}
+
+#stats > .primary > div:first-of-type {
+    margin-top: 0;
+}
+
+#stats > .primary > div > h3 {
+    font-size: 2rem;
+    padding: 0.5rem;
+    text-transform: uppercase;
+    order: 2;
+    border: 1px solid black;
+    border-radius: 0 0 0.5rem 0.5rem;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+#stats > .primary > div > p {
+    font-size: 5rem;
+    text-transform: uppercase;
+    border-radius: 0.5rem 0.5rem 0 0;
+    border: 1px solid black;
+    border-bottom: 0;
+    font-family: 'Coming Soon', cursive;
+    line-height: 1;
+    padding: 1.5rem 0 1rem 0;
+}
+
+#stats > .skills {
+    flex: 60%;
+    margin-left: 2rem;
+}
+
+#stats > .skills ul {
+    list-style: none;
+}
+
+#stats > .skills ul > li {
+    padding: 0 0 0 0;
+    margin: 0 0 2rem 0;
+    border-bottom: 1px solid rgba(0,0,0,0.5);
+}
+
+#personality, #photo {
+    flex-grow: 0;
+}
