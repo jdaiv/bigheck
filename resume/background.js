@@ -4,6 +4,7 @@ const ctx = canvas.getContext('2d')
 const container = document.querySelector('.container')
 let resize = true
 let dirty = true
+let rainbows = false
 
 canvas.imageSmoothingEnabled = false
 
@@ -17,8 +18,6 @@ function rect (el) {
     }
 }
 
-let bg = []
-
 function draw (t) {
     if (resize) {
         canvas.width = Math.floor(window.innerWidth / 2)
@@ -26,27 +25,18 @@ function draw (t) {
         canvas.style.width = canvas.width * 2 + 'px'
         canvas.style.height = canvas.height * 2 + 'px'
 
-        bg = []
-        for (var x = 0; x < canvas.width; x++) {
-            bg.push(Math.sin(x/ 100) + Math.random())
-        }
-
         dirty = true
         resize = false
     }
 
-    for (var x = 0; x < canvas.width; x++) {
-        bg[x] += Math.random() / 500
-    }
-
-    if (t) {
-        // ctx.drawImage(canvas,
-        //    0, 0, canvas.width, canvas.height,
-        //    Math.sin(t / 400) * 5, Math.cos(t / 100) * 5, canvas.width, canvas.height)
+    if (rainbows) {
+        ctx.drawImage(canvas,
+           0, 0, canvas.width, canvas.height,
+           Math.sin(t / 400) * 5, Math.cos(t / 100) * 5, canvas.width, canvas.height)
     }
 
     if (dirty) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height)
+        if (!rainbows) ctx.clearRect(0, 0, canvas.width, canvas.height)
         const name = document.querySelector('.name')
         drawBanner(rect(name), t)
         const sections = document.querySelectorAll('section')
@@ -57,18 +47,23 @@ function draw (t) {
         // dirty = false
     }
 
-    if (t) {
+    if (rainbows) {
         const v = 20
-        // for (var x = 0; x < canvas.width; x += v) {
-        //     ctx.drawImage(canvas,
-        //        x, 0, v, canvas.height,
-        //        x, Math.cos((x + t) / 100) * v / 4, v, canvas.height)
-        // }
-        // for (var y = 0; y < canvas.height; y += v) {
-        //     ctx.drawImage(canvas,
-        //        0, y, canvas.width, v,
-        //        Math.sin((y + t) / 300) * v / 4, y, canvas.width, v)
-        // }
+        for (var x = 0; x < canvas.width; x += v) {
+            ctx.drawImage(canvas,
+               x, 0, v, canvas.height,
+               x, Math.cos((x + t) / 100) * v / 4, v, canvas.height)
+        }
+        for (var y = 0; y < canvas.height; y += v) {
+            ctx.drawImage(canvas,
+               0, y, canvas.width, v,
+               Math.sin((y + t) / 300) * v / 4, y, canvas.width, v)
+        }
+
+        ctx.globalCompositeOperation = 'overlay'
+        ctx.fillStyle = `hsl(${t / 10 % 360}, 50%, 50%)`
+        ctx.fillRect(0, 0, canvas.width, canvas.height)
+        ctx.globalCompositeOperation = 'source-over'
     }
 
     window.requestAnimationFrame(draw)
@@ -89,7 +84,7 @@ function drawBanner (r, t) {
     }
 
     const PADDING = 10
-    const LINE_WIDTH = 4
+    const LINE_WIDTH = 5
     const ANGLE = 8
 
     ctx.lineWidth = 1
@@ -102,7 +97,7 @@ function drawBanner (r, t) {
     }
 
     ctx.fillStyle = '#9e2835'
-    const start = ((PADDING + 50) / ANGLE) * 2
+    const start = ((PADDING + 50) / ANGLE) * 2 - 2
     for (var x = PADDING + 50 - LINE_WIDTH; x >= PADDING - LINE_WIDTH; x -= LINE_WIDTH) {
         drawLine(x,
             yOffset(x) + start - Math.floor(x / ANGLE))
@@ -110,7 +105,7 @@ function drawBanner (r, t) {
 
     ctx.fillStyle = '#3f2832'
     for (var x = PADDING * 2; x < PADDING + 50; x += LINE_WIDTH) {
-        drawLine(x, yOffset(x) + Math.floor(x / ANGLE))
+        drawLine(x, yOffset(x) + Math.floor(x / ANGLE) + 1)
     }
 
     ctx.fillStyle = '#e43b44'
