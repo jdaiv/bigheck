@@ -24,6 +24,10 @@ canvas {
     image-rendering: pixelated;
 }
 
+#overlay {
+    display: none;
+}
+
 .container {
     margin: 0 auto;
     padding: 4rem;

@@ -211,7 +211,7 @@ void main() {
     vec2 waves = (aScreenCoord.xy + vec2(0,
         sin(uTime / 1600. + aScreenCoord.x / 50.0) * 2.0 +
         sin(uTime / 800. + aScreenCoord.x / 10.0) * 2.0 +
-        sin(uTime / 800. + aScreenCoord.x / 20.0) * 1.0 +
+        sin(uTime / 800. + aScreenCoord.x / 20.0) * 1.0 -
         sin(uTime / 200. + aScreenCoord.x / 20.0) * 1.0)
     );
     gl_Position = vec4(((
@@ -258,7 +258,7 @@ void main() {
     float yOffset =
         sin(uTime / 1600. + gl_FragCoord.x / 50.0) * 2.0 +
         sin(uTime / 800.0 + gl_FragCoord.x / 10.0) * 2.0 +
-        sin(uTime / 800.0 + gl_FragCoord.x / 20.0) * 1.0 +
+        sin(uTime / 800.0 + gl_FragCoord.x / 20.0) * 1.0 -
         sin(uTime / 200.0 + gl_FragCoord.x / 20.0) * 1.0;
     float waveX = sin(uTime / 400.0 + gl_FragCoord.x / 10.0) / 10.0;
     float waveY = cos(uTime / 400.0 + gl_FragCoord.y / 50.0) / 20.0;
