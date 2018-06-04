@@ -1,0 +1,72 @@
+@media print {
+    html {
+        font-size: 4pt;
+        background: none;
+    }
+
+    canvas {
+        display: none;
+    }
+
+    #overlay {
+        display: none;
+    }
+
+    .container {
+        margin: 0;
+        width: 100%;
+        max-width: unset;
+    }
+
+    .columns > .column {
+        min-width: 0;
+    }
+
+    .columns > .column > section {
+        padding: 2rem;
+    }
+
+    .columns h2 {
+        border-top: 1px solid black;
+        padding-bottom: 0;
+        margin-bottom: 0;
+    }
+
+    .paper {
+        padding: 1rem 0;
+        background: 0;
+    }
+
+    h1, section {
+        background: #eee;
+        border: 1px solid black;
+    }
+
+    header {
+        /*align-items: stretch;*/
+    }
+
+    header > h1 {
+        min-width: 0;
+        margin: 1rem;
+        font-size: 6rem;
+    }
+
+    header > section {
+        padding: 1rem;
+    }
+
+    #stats > .primary > div {
+        border-radius: 0;
+    }
+
+    #stats > .primary > div > h3 {
+        background: black;
+        color: white;
+        padding: 1.5rem 1rem;
+    }
+
+    #stats > .primary > div > div {
+        border-bottom: 1px solid black;
+    }
+}
