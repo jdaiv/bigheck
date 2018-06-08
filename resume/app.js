@@ -69,7 +69,7 @@ class App {
 
     static downloadPDF (evt) {
         window.open('resume-of-john-aivaliotis.pdf')
-        App.toggleToolbox()
+        // App.toggleToolbox()
     }
 
     static openThemeSelect (evt) {

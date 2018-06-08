@@ -78,10 +78,8 @@ class ThemeManager {
             themeBtn.style.height = t.height + 40 + 'px'
             themeBtn.appendChild(container)
             themeBtn.onclick = () => {
-                console.log('changing theme to:', t)
                 ThemeManager.toggleSelector()
                 ThemeManager.change(t)
-                App.resize()
             }
             ThemeManager.selectorInner.appendChild(themeBtn)
 
@@ -91,16 +89,20 @@ class ThemeManager {
         ThemeManager.css = document.createElement('style')
         document.body.appendChild(ThemeManager.css)
 
-        ThemeManager.change(THEMES[0])
+        ThemeManager.change(THEMES[0], true)
     }
 
-    static change (t) {
+    static change (t, skipResize) {
+        if (t == ThemeManager.current) return
+        console.log('changing theme to:', t)
         ThemeManager.current = t
         ThemeManager.generateCSS(t)
-        App.resizing = true
-        setTimeout(() => {
-            App.resizing = false
-        }, 500)
+        if (!skipResize) {
+            App.resizing = true
+            setTimeout(() => {
+                App.resizing = false
+            }, 500)
+        }
     }
 
     static generateCSS (t) {

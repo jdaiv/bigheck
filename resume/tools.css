@@ -15,7 +15,7 @@
 }
 
 #toolbox:hover {
-    transform: translateX(218px);
+    /*transform: translateX(218px);*/
 }
 
 #toolbox.open {
