@@ -1,8 +1,12 @@
 @media print {
     html {
         font-size: 4pt;
-        background: none;
+        background: none !important;
         margin-bottom: 0;
+    }
+
+    body {
+        color: black !important;
     }
 
     canvas {
@@ -24,7 +28,7 @@
     }
 
     .columns > .column > section {
-        padding: 2rem;
+        padding: 2rem !important;
     }
 
     .columns h2 {
@@ -39,8 +43,9 @@
     }
 
     h1, section {
-        background: #eee;
-        border: 1px solid black;
+        background: #eee !important;
+        border: 1px solid black !important;
+        border-radius: 0 !important;
     }
 
     header {
