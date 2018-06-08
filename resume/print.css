@@ -43,7 +43,8 @@
     }
 
     h1, section {
-        background: #eee !important;
+        /*background: #eee !important;*/
+        background: none !important;
         border: 1px solid black !important;
         border-radius: 0 !important;
     }
@@ -73,9 +74,13 @@
     }
 
     #stats > .primary > div > h3 {
-        background: black;
+        background: none;
+        color: black;
+        padding: 1rem 1rem;
+
+        /*background: black;
         color: white;
-        padding: 1.5rem 1rem;
+        padding: 1.5rem 1rem;*/
     }
 
     #stats > .primary > div > div {
