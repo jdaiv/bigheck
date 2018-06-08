@@ -7,11 +7,67 @@
 
     -->
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="initial-scale=1">
 
     <!-- I'd rather not use external fonts, but it's easier than making good lists for all systems. -->
     <link href="https://fonts.googleapis.com/css?family=Coming+Soon|Share:700" rel="stylesheet">
+    <style>
+
+    * {
+        box-sizing: border-box;
+    }
+
+    html {
+        image-rendering: -moz-crisp-edges;
+        image-rendering: pixelated;
+        background-position: center top;
+        font-family: 'Share', sans-serif;
+        font-size: 8px;
+        overflow-x: hidden;
+        min-height: 100vh;
+        margin-bottom: 4rem;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    #overlay {
+        pointer-events: all;
+        z-index: 100;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.4);
+        color: white;
+        font-size: 4rem;
+        display: flex;
+        justify-content: center;
+        align-items: stretch;
+        flex-direction: column;
+
+        transition: opacity 200ms linear;
+        transition-delay: 500ms;
+    }
+
+    #overlay.hide {
+        pointer-events: none;
+        opacity: 0;
+    }
+
+    #overlay > div {
+        pointer-events: none;
+        text-align: center;
+        background: rgba(0, 0, 0, 0.9);
+        padding: 2rem;
+    }
+
+    </style>
     <link rel="stylesheet" href="main.css" type="text/css">
+    <link rel="stylesheet" href="tools.css" type="text/css">
     <link rel="stylesheet" href="print.css" type="text/css">
     <title>Resume</title>
 </head>
@@ -19,18 +75,15 @@
     <noscript>
         <!-- Be nice to users without JS -->
         <style>
-            #overlay {
+            #overlay, #toolbox, .tool_window {
                 display: none;
-            }
-            h1, section {
-                background: #eee;
-                border-radius: 1rem;
-                box-shadow: 0.5rem 0.5rem 0 rgba(0, 0, 0, 0.2);
-                border: 1px solid black;
             }
         </style>
     </noscript>
-    <div id="overlay">We Loadin'</div>
+    <div id="overlay">
+        <div>Loadin' Resume</div>
+        <div style="font-size: 2rem;">Assets loaded: <span id="loading_status">? / ?</span></div>
+    </div>
     <div class="container">
         <header>
             <h1 class="name">
@@ -189,24 +242,25 @@
             </div>
         </div>
     </div>
+    <div id="toolbox">
+        <button onclick="App.openThemeSelect()"></button>
+        <button onclick="App.printMe()"></button>
+        <button onclick="App.downloadPDF()"></button>
+        <button onclick="App.toggleToolbox()"></button>
+    </div>
+    <div id="theme_selector" class="tool_window tool_bg">
+        <h2>Theme Selector</h2>
+        <div class="inner">
+        </div>
+    </div>
     <script type="text/javascript" src="resources.js"></script>
     <script type="text/javascript" src="vga.js"></script>
+    <script type="text/javascript" src="themes.js"></script>
     <script type="text/javascript" src="things.js"></script>
+    <script type="text/javascript" src="material.js"></script>
     <script type="text/javascript" src="app.js"></script>
     <script>
-
-        const resources = new Resources()
-        const vga = new VGA()
-        if (vga.init()) {
-            GLRenderer.clear()
-            console.log('video init')
-            resources.load()
-                .then(() => {
-                    console.log('resources loaded')
-                    setTimeout(App.run)
-                })
-        }
-
+        App.init()
     </script>
 </body>
 </html>

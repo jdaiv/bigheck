@@ -1,31 +1,21 @@
-* {
-    box-sizing: border-box;
-}
-
-html {
-    background: url('background.png');
-    background-position: center top;
-    font-family: 'Share', cursive;
-    font-size: 8px;
-    overflow-x: hidden;
-    min-height: 100vh;
-}
-
-body {
-    margin: 0;
-    padding: 0;
-}
-
 canvas {
     position: fixed;
     top: 0;
     z-index: -1;
     image-rendering: -moz-crisp-edges;
     image-rendering: pixelated;
+    opacity: 0;
+    transition: opacity 200ms linear;
+    transition-delay: 200ms;
 }
 
-#overlay {
-    display: none;
+h1, section {
+    background: #eee;
+    border-radius: 2rem;
+    box-shadow: 0.5rem 0.5rem 0 rgba(0, 0, 0, 0.2);
+    border: 1px solid black;
+    transition: all 400ms ease;
+    transition-delay: 200ms;
 }
 
 .container {
@@ -72,7 +62,7 @@ section > * {
     /*border: 1px black solid;*/
     padding: 1rem;
     border-radius: 0.5rem;
-    background: #743f3944;
+    background: #00000022;
 }
 
 .paper h3 {

@@ -1,129 +1,131 @@
 
-const FILL = -1
-const NO_FILL = -2
-const THEMES = [
-    {
-        image: 'theme01',
-        width: 64,
-        height: 64,
-        slices: [
-            [30,   0, NO_FILL, 30, FILL, 34, NO_FILL, 64],
-            [FILL, 0, NO_FILL, 8, FILL, 56, NO_FILL, 64],
-            [30,   0, NO_FILL, 8, FILL, 10, NO_FILL, 54, FILL, 56, NO_FILL, 64]
-        ]
-    }
-]
-
-function generateVerts (verts, triangles) {
-    let arr = []
-    triangles.forEach(t => arr.push(verts[t][0], verts[t][1]))
-    return arr
-}
-
-function calculateThemeTriangles (t) {
-    let tris = []
-    let offset = 0
-    t.slices.forEach(s => {
-        var len = s.length / 2 - 1
-        for (let box = 0; box < len; box++) {
-            tris.push(
-                offset + box + 0, offset + box + 1, offset + box + len + 1,
-                offset + box + 1, offset + box + len + 2, offset + box + len + 1
-            )
-        }
-        offset += s.length
-    })
-    t.triangles = tris
-}
-
-function calculateThemeUVs (t) {
-    const ts = t.slice
-    let uvs = []
-    let y = 0
-    t.slices.forEach((s, i) => {
-        for (let x = 1; x < s.length; x += 2) {
-            uvs.push([s[x], y])
-        }
-        if (s[0] == FILL) {
-            y = t.height - t.slices[i + 1][0]
-        } else {
-            y += s[0]
-        }
-        for (let x = 1; x < s.length; x += 2) {
-            uvs.push([s[x], y])
-        }
-    })
-    uvs.forEach(uv => {
-        uv[0] /= t.width
-        uv[1] /= t.height
-    })
-    t.uvs = generateVerts(uvs, t.triangles)
-}
-THEMES.forEach(t => {
-    calculateThemeTriangles(t)
-    calculateThemeUVs(t)
-})
-
 class SectionBG {
 
     constructor (el) {
         this.element = el
-        this.glObj = new GLObject2D(DEFAULT_SHADER)
-        this.glObj.setUVs(THEMES[0].uvs)
-        this.glObj.setTexture(new GLTexture(resources.images.theme01))
+        this.glObj = new GLObject2D(MaterialManager.materials.sectionBg)
         this.resize()
     }
 
     resize () {
+        const t = ThemeManager.current
+        this.glObj.setTexture(ResourceManager.images[t.image])
+
         const r = rect(this.element)
         const centerX = Math.floor(r.width / 2)
-        const t = THEMES[0]
-        let verts = []
-        let slices = []
+        let triangles = []
+        let uvs = []
         let y = 0
+
+        function box (height, start, end, uv0, uv1, uv2, uv3) {
+            start += r.x
+            end += r.x
+            let _y = y + r.y
+            triangles.push(
+                start, _y,
+                end, _y,
+                start, _y + height,
+                end, _y,
+                end, _y + height,
+                start, _y + height
+            )
+            uvs.push(uv0[0], uv0[1], uv1[0], uv1[1], uv2[0], uv2[1],
+                uv1[0], uv1[1], uv3[0], uv3[1], uv2[0], uv2[1])
+        }
+
+        const yUVs = [
+            0,
+            t.slices[0][0] / t.height,
+            (t.height - t.slices[2][0]) / t.height,
+            1
+        ]
+
         t.slices.forEach((s, i) => {
             const len = s.length
-            let solids = -2
-            for (let i = 2; i < len; i += 2) {
-                if (s[i] == NO_FILL) solids++
+
+            let arr = [0, s[2]]
+            let arrUVs = [0, s[2]]
+
+            if (len == 9) {
+                const midPoint = Math.floor(t.width / 2)
+                const left = midPoint - s[4]
+                const right = s[5] - midPoint
+                arr.push(centerX - left, centerX + right)
+                arrUVs.push(s[4], s[5])
+            } else if (len == 6) {
+                // we good, nothing else to do
+            } else {
+                throw new Error('unsupported theme slice')
             }
 
-            let arr = []
+            arr.push(r.width - s[len - 1] + s[len - 2], r.width)
+            arrUVs.push(s[len - 2], s[len - 1])
 
-            const innerEdge = s[3]
-            const outerEdge = r.width - s[len - 1] + s[len - 3]
+            const _arrUVs = arrUVs.map(u => u / t.width)
 
-            arr.push(s[1])
-            arr.push(innerEdge)
+            const uvTop = yUVs[i]
+            const uvBottom = yUVs[i + 1]
 
-            if (solids > 0) {
-                const width = Math.floor(outerEdge - innerEdge)
-                const segmentWidth = Math.floor(width / (solids + 1))
-                for (let i = 1; i <= solids; i++) {
-                    const start = s[3 + i * 2]
-                    const end = s[5 + i * 2]
-                    const midPoint = Math.floor((end - start) / 2)
-                    const x = (innerEdge + segmentWidth * i)
-                    arr.push(x - midPoint, x + midPoint)
+            let height = 0
+            if (i != 1) {
+                height = s[0]
+                const mode = s[3]
+                for (let x = 0; x < arr.length; x++) {
+                    if (x % 2 == 1 && mode == REPEAT) {
+                        const width = arrUVs[x + 1] - arrUVs[x]
+                        let _x = arr[x]
+                        let uvEnd = _arrUVs[x + 1]
+                        for (let _i = 0; _x < arr[x + 1] - width; _x += width, _i++) {
+                            let _uvStart = _i % 2 == 0 && t.repeatFlip ? uvEnd : _arrUVs[x]
+                            let _uvEnd = _i % 2 == 0 && t.repeatFlip ? _arrUVs[x] : uvEnd
+                            box(height, _x, _x + width,
+                                [_uvStart, uvTop], [_uvEnd, uvTop],
+                                [_uvStart, uvBottom], [_uvEnd, uvBottom])
+                        }
+                        // uvEnd = _arrUVs[x + 1] - (arr[x + 1] -_x) / t.width
+                        box(height, _x, arr[x + 1],
+                            [_arrUVs[x], uvTop], [uvEnd, uvTop],
+                            [_arrUVs[x], uvBottom], [uvEnd, uvBottom])
+                    } else {
+                        box(height, arr[x], arr[x + 1],
+                            [_arrUVs[x], uvTop], [_arrUVs[x + 1], uvTop],
+                            [_arrUVs[x], uvBottom], [_arrUVs[x + 1], uvBottom])
+                    }
+                }
+            } else {
+                const mode = s[0]
+                height = r.height - t.slices[0][0] - t.slices[2][0]
+
+                if (mode == REPEAT) {
+                    const originalY = y
+                    const targetY = y + height
+                    let _height = t.height - t.slices[2][0] - t.slices[0][0]
+                    for (let _i = 0; y < targetY; y += _height, _i++) {
+                        let _uvStart = _i % 2 == 0 && t.repeatFlip ? yUVs[2] : yUVs[1]
+                        let _uvEnd = _i % 2 == 0 && t.repeatFlip ? yUVs[1] : yUVs[2]
+                        if (y + _height >= targetY) {
+                            _height = targetY - y
+                        }
+                        for (let x = 0; x < arr.length; x++) {
+                            box(_height, arr[x], arr[x + 1],
+                                [_arrUVs[x], _uvStart], [_arrUVs[x + 1], _uvStart],
+                                [_arrUVs[x], _uvEnd], [_arrUVs[x + 1], _uvEnd])
+                        }
+                    }
+                    y = originalY
+                } else {
+                    for (let x = 0; x < arr.length; x++) {
+                        box(height, arr[x], arr[x + 1],
+                            [_arrUVs[x], uvTop], [_arrUVs[x + 1], uvTop],
+                            [_arrUVs[x], uvBottom], [_arrUVs[x + 1], uvBottom])
+                    }
                 }
             }
 
-            arr.push(outerEdge)
-            arr.push(r.width)
-
-            arr.forEach(x => {
-                verts.push([x + r.x, y + r.y])
-            })
-            if (s[0] == FILL) {
-                y = r.height - t.slices[i + 1][0]
-            } else {
-                y += s[0]
-            }
-            arr.forEach(x => {
-                verts.push([x + r.x, y + r.y])
-            })
+            y += height
         })
-        this.glObj.setVerts(generateVerts(verts, t.triangles))
+        this.glObj.setUVs(uvs)
+        this.glObj.setVerts(triangles)
     }
 
     draw () {
@@ -136,21 +138,20 @@ class Flag {
 
     constructor (el) {
         this.element = el
-        this.shader = new GLShader({
-            vs: WAVEY_VS, fs: FLAT_FS
-        })
+        this.material = MaterialManager.materials.flag
         this.layers = [
-            new GLObject2D(this.shader),
-            new GLObject2D(this.shader),
-            new GLObject2D(this.shader)
+            new GLObject2D(this.material),
+            new GLObject2D(this.material),
+            new GLObject2D(this.material)
         ]
-        this.layers[0].color = [0x9e / 0xFF, 0x28 / 0xFF, 0x35 / 0xFF, 1]
-        this.layers[1].color = [0x3f / 0xFF, 0x28 / 0xFF, 0x32 / 0xFF, 1]
-        this.layers[2].color = [0xe4 / 0xFF, 0x3b / 0xFF, 0x44 / 0xFF, 1]
         this.resize()
     }
 
     resize () {
+        this.layers[0].color = ThemeManager.current.flag[0]
+        this.layers[1].color = ThemeManager.current.flag[1]
+        this.layers[2].color = ThemeManager.current.flag[2]
+
         const r = rect(this.element)
         const hr = rect(this.element.querySelector('h1'))
 
@@ -201,7 +202,9 @@ class Flag {
     }
 
     draw () {
-        this.layers.forEach(l => l.draw())
+        this.layers.forEach((l, idx) => {
+            l.draw()
+        })
     }
 
 }

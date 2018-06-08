@@ -1,0 +1,128 @@
+#toolbox {
+    image-rendering: -moz-crisp-edges;
+    image-rendering: pixelated;
+    background: url('toolbox.png');
+    background-size: 100%;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    height: 64px;
+    width: 256px;
+    transform: translateX(230px);
+    transition: transform 400ms ease;
+    cursor: pointer;
+    z-index: 90;
+}
+
+#toolbox:hover {
+    transform: translateX(218px);
+}
+
+#toolbox.open {
+    background-position: 0 100%;
+    transform: translateX(0);
+}
+
+#toolbox.open:hover {
+    transform: translateX(0px);
+}
+
+#toolbox > button {
+    width: 64px;
+    height: 64px;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    outline: 0;
+    background: 0;
+    float: right;
+    mix-blend-mode: color-dodge;
+    transition: background 50ms linear;
+    cursor: pointer;
+}
+
+#toolbox > button:hover {
+    background: #c0cbdc22;
+}
+
+#toolbox > button:last-of-type:hover {
+    background: 0;
+}
+
+.tool_window {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    z-index: 80;
+    font-family: monospace;
+    color: white;
+    /*pointer-events: none;*/
+}
+
+.tool_bg,
+.tool_window button {
+    background: #3a4466;
+    border-image: url('tools_bg1.png') 16 fill / 16px;
+    border-image-outset: 4px;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: pixelated;
+    padding: 2rem;
+    font-size: 2rem;
+}
+
+.tool_window button {
+    background: 0;
+    outline: 0;
+    font-family: monospace;
+    color: white;
+    cursor: pointer;
+}
+
+.tool_window button:hover {
+    border-image-source: url('tools_bg2.png') !important;
+    background: #c0cbdc;
+    color: black;
+}
+
+.tool_window h2 {
+    margin: 1rem;
+    text-align: center;
+    width: auto;
+    font-weight: normal;
+    font-size: 3rem;
+    order: 0;
+}
+
+#theme_selector {
+    width: 250px;
+    transform: translateX(-300px);
+    transition: transform 400ms ease;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#theme_selector.open {
+    transform: translateX(0);
+}
+
+#theme_selector button {
+    width: calc(100% - 16px);
+    display: block;
+    margin: 1rem 1rem 2rem 1rem;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: pixelated;
+    text-align: center;
+    background-position: center, top left !important;
+    background-repeat: no-repeat, repeat !important;
+    padding: 4.5rem;
+    text-transform: uppercase;
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+#theme_selector .inner {
+    overflow-y: auto;
+    flex: 1;
+}
+
