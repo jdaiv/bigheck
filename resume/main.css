@@ -58,7 +58,7 @@ section > * {
 
 .paper {
     margin: 0 0 2rem 0;
-    font-family: 'Coming Soon', cursive;
+    font-family: Rokkitt, serif;
     /*border: 1px black solid;*/
     padding: 1rem;
     border-radius: 0.5rem;
@@ -67,7 +67,18 @@ section > * {
 
 .paper h3 {
     text-transform: none;
-    font-size: 2rem;
+    font-size: 3rem;
+    font-weight: normal;
+    margin: 4rem 0 0 0;
+    line-height: 1.2;
+}
+
+.paper h3:first-child {
+    margin-top: 1rem;
+}
+
+a {
+    color: inherit;
 }
 
 ul {
@@ -106,12 +117,12 @@ h2 {
 h3 {
     margin: 0;
     /*text-align: center;*/
-    font-size: 1.5rem;
+    font-size: 2rem;
     text-transform: uppercase;
 }
 
 p {
-    margin: 0;
+    margin: 1rem 0;
     line-height: 1.5;
 }
 
@@ -136,16 +147,18 @@ header > * {
 header > h1 {
     margin: 2rem;
     padding: 2rem 4rem;
-    line-height: 1.2;
+    line-height: 1;
     flex: 0 1 auto;
     min-width: 320px;
     text-align: center;
-    font-family: 'Coming Soon', cursive;
+    font-family: 'Rokkitt', serif;
+    font-size: 5rem;
 }
 
 h1 > small {
-    font-family: 'Share', cursive;
+    font-family: 'Share', sans-serif;
     display: block;
+    font-size: 3rem;
 }
 
 #personal_details {
@@ -169,7 +182,7 @@ h1 > small {
 #personal_details > div > p {
     border-bottom: 1px solid black;
     margin-bottom: 0.5rem;
-    font-family: 'Coming Soon', cursive;
+    font-family: 'Rokkitt', serif;
 }
 
 #personal_details > div > h2 {
@@ -239,14 +252,14 @@ h1 > small {
 #stats > .primary > div > .score {
     font-size: 5rem;
     text-transform: uppercase;
-    font-family: 'Coming Soon', cursive;
+    font-family: 'Rokkitt', serif;
     line-height: 1;
     display: inline-block;
     /*padding: 1.5rem 0 1rem 0;*/
 }
 
 #stats > .primary > div > .mod {
-    font-family: 'Coming Soon', cursive;
+    font-family: 'Rokkitt', serif;
     font-size: 3rem;
     padding-bottom: 1rem;
 }
@@ -284,6 +297,16 @@ h1 > small {
 
 #personality, #photo {
     flex-grow: 0;
+}
+
+#personality p {
+    margin: 0;
+}
+
+#photo > img {
+    /*opacity: 0.5;*/
+    transition: opacity 500ms linear;
+    image-rendering: unset;
 }
 
 #exp p {

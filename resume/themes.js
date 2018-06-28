@@ -5,6 +5,7 @@ const REPEAT = -3
 const THEMES = [
     {
         name: 'Desert',
+        subtitle: 'Classic',
         image: 'theme01',
         background: 'url(\'background.png\')',
         sectionPadding: '4rem 2rem',
@@ -13,6 +14,7 @@ const THEMES = [
         },
         width: 64,
         height: 64,
+        imagePalette: [1, 2, 3, 4, 5],
         flag: [
             [0x9e / 0xFF, 0x28 / 0xFF, 0x35 / 0xFF, 1],
             [0x3f / 0xFF, 0x28 / 0xFF, 0x32 / 0xFF, 1],
@@ -26,6 +28,7 @@ const THEMES = [
     },
     {
         name: 'Crunchy',
+        subtitle: 'Ow, my eyes',
         image: 'theme02',
         background: 'url(\'bg2.png\')',
         sectionPadding: '3rem',
@@ -35,6 +38,7 @@ const THEMES = [
         width: 64,
         height: 64,
         repeatFlip: false,
+        imagePalette: [16, 17, 18, 19, 20],
         flag: [
             [0x00 / 0xff, 0x95 / 0xff, 0xe9 / 0xff, 1],
             [0x12 / 0xFF, 0x4e / 0xFF, 0x89 / 0xFF, 1],

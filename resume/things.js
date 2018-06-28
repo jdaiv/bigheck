@@ -134,6 +134,34 @@ class SectionBG {
 
 }
 
+class ImageThres {
+
+    constructor (el, resourceName) {
+        this.element = el
+        this.glObj = new GLObject2D(MaterialManager.materials.imageThres)
+        this.glObj.setTexture(ResourceManager.images[resourceName])
+        this.resize()
+    }
+
+    resize () {
+        const r = rect(this.element)
+
+        this.glObj.setUVs([
+            0, 0, 1, 0, 0, 1,
+            1, 0, 1, 1, 0, 1,
+        ])
+        this.glObj.setVerts([
+            r.x, r.y, r.x + r.width, r.y, r.x, r.y + r.height,
+            r.x + r.width, r.y, r.x + r.width, r.y + r.height, r.x, r.y + r.height,
+        ])
+    }
+
+    draw () {
+        this.glObj.draw()
+    }
+
+}
+
 class Flag {
 
     constructor (el) {

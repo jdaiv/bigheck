@@ -1,6 +1,7 @@
 class App {
 
     static init () {
+        App.paletteOffset = 0
         App.customStyles = document.createElement('style')
         document.body.appendChild(App.customStyles)
         if (GLRenderer.init()) {
@@ -17,6 +18,10 @@ class App {
                         background: rgba(0, 0, 0, 0);
                         box-shadow: none;
                         border: 0;
+                    }
+                    #photo > img {
+                        opacity: 0;
+                        cursor: pointer;
                     }`
                     document.querySelector('#overlay').classList.add('hide')
                     console.log('resources loaded')
@@ -35,20 +40,38 @@ class App {
              App.sections.push(new SectionBG(sections[i]))
         }
         App.flag = new Flag(document.querySelector('header'))
+        const image = document.querySelector('#photo > img')
+        image.onclick = function () {
+            App.paletteOffset = 1
+            App.rotatePalette = true
+        }
+        App.me = new ImageThres(image, 'me')
         window.requestAnimationFrame(App.draw)
         window.onresize = App.resize
     }
 
     static draw (t) {
         GLRenderer.t = t
+
+        if (App.rotatePalette) {
+            if (App.paletteOffset > 0) {
+                App.paletteOffset += 0.5
+                if (App.paletteOffset > 32) {
+                    App.paletteOffset = 0
+                }
+            }
+        }
+
         if (App.resizing) {
             App.flag.resize()
             App.sections.forEach(s => s.resize())
+            App.me.resize()
         }
         GLRenderer.preRender()
         GLRenderer.clear()
         App.flag.draw()
         App.sections.forEach(s => s.draw())
+        App.me.draw()
         GLRenderer.present()
         window.requestAnimationFrame(App.draw)
     }
@@ -57,6 +80,7 @@ class App {
         GLRenderer.resize()
         App.flag.resize()
         App.sections.forEach(s => s.resize())
+        App.me.resize()
     }
 
     static toggleToolbox () {

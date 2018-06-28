@@ -7,7 +7,9 @@ const RESOURCES = {
         theme02bg: 'bg2.png',
         // pre-cache somethings
         toolBg: 'tools_bg1.png',
-        toolBgHover: 'tools_bg2.png'
+        toolBgHover: 'tools_bg2.png',
+        me: 'me_.jpg',
+        palette: 'palette.png'
     },
     SHADERS: {
         default_post_vs: 'shaders/default_post_vs.glsl',
@@ -15,7 +17,8 @@ const RESOURCES = {
         default_vs: 'shaders/default_vs.glsl',
         default_fs: 'shaders/default_fs.glsl',
         flag_vs: 'shaders/flag_vs.glsl',
-        flag_fs: 'shaders/flag_fs.glsl'
+        flag_fs: 'shaders/flag_fs.glsl',
+        image_fs: 'shaders/image_fs.glsl'
     }
 }
 

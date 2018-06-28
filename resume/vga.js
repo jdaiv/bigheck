@@ -111,6 +111,10 @@ class GLObject2D {
             gl.activeTexture(gl.TEXTURE0)
             gl.bindTexture(gl.TEXTURE_2D, this.texture.tex)
         }
+
+        gl.activeTexture(gl.TEXTURE1)
+        gl.bindTexture(gl.TEXTURE_2D, ResourceManager.images.palette.tex)
+
         if (this.color) {
             this.material.uniforms.uColor.set(this.color)
         }

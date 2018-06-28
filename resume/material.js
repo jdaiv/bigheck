@@ -13,6 +13,10 @@ const MATERIALS = {
     defaultPost: {
         vs: 'default_post_vs',
         fs: 'default_post_fs'
+    },
+    imageThres: {
+        vs: 'default_vs',
+        fs: 'image_fs'
     }
 }
 
@@ -51,10 +55,18 @@ const DEFAULT_UNIFORMS = [
         fsOnly: true
     },
     {
-        name: 'uSampler1',
+        name: 'uPalette',
         type: 'sampler2D',
         length: 1,
         value: () => 1,
+        fsOnly: true
+    },
+    {
+        name: 'uImagePalette',
+        type: 'f',
+        array: true,
+        length: 5,
+        value: () => {return ThemeManager.current.imagePalette.map(x => Math.floor(x + App.paletteOffset) % 32)},
         fsOnly: true
     },
     {
@@ -90,17 +102,15 @@ class MaterialManager {
         MaterialManager.defaultFSHeader = 'precision highp float;\n'
 
         function getType (d) {
-            if (d.length > 1) {
-                return (d.type != 'f' ? d.type : '') + 'vec' + d.length
-            } else {
-                switch (d.type) {
-                    case 'i':
-                        return 'int'
-                    case 'f':
-                        return 'float'
-                    default:
-                        return d.type
-                }
+            switch (d.type) {
+                case 'i':
+                    if (d.length > 1 && !d.array) return 'ivec' + d.length
+                    return 'int'
+                case 'f':
+                    if (d.length > 1 && !d.array) return 'vec' + d.length
+                    return 'float'
+                default:
+                    return d.type
             }
         }
 
@@ -110,7 +120,7 @@ class MaterialManager {
         })
         DEFAULT_UNIFORMS.forEach(u => {
             const precision = u.precision || ''
-            const str = `uniform ${precision} ${getType(u)} ${u.name};\n`
+            const str = `uniform ${precision} ${getType(u)} ${u.name + (u.array ? `[${u.length}]` : '')};\n`
             MaterialManager.defaultFSHeader += str
             if (!u.fsOnly) MaterialManager.defaultVSHeader += str
         })
@@ -148,7 +158,7 @@ class Material {
     addUniform (u) {
         const location = gl.getUniformLocation(this.program, u.name)
         const type = u.type == 'sampler2D' ? 'i' : u.type
-        const func = gl['uniform' + u.length + type + (u.length > 1 ? 'v' : '')]
+        const func = gl['uniform' + (u.array ? 1 : u.length) + type + (u.length > 1 || u.array ? 'v' : '')]
         this.uniforms[u.name] = {
             location: location,
             set: func.bind(gl, location)
