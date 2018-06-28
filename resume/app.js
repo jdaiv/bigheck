@@ -98,7 +98,7 @@ class App {
 
     static openThemeSelect (evt) {
         ThemeManager.toggleSelector()
-        App.toggleToolbox()
+        // App.toggleToolbox()
     }
 
 }
