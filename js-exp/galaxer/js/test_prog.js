@@ -29,10 +29,32 @@ var PRG_RAINBOWS = function () {
     var ram_check = 0
     var t = 0
     var _dt = 0
+
+    var gif = new GIF({
+        workers: 8,
+        quality: 30
+    })
+
+    gif.on('finished', function(blob) {
+        window.open(URL.createObjectURL(blob));
+    })
+
+    var gifFrame = 0
+    var gifDone = false
+
     self.loop = function (dt) {
-        t += dt * menu.data.speed
+        // t += dt * menu.data.speed
+        gifFrame++
+        t += 0.030 * menu.data.speed
         color_increment(dt * menu.data.speed)
         _dt = dt
+
+        if (color_total > 360  && color_total <= 360 * 2) {
+            if (gifFrame % 8) gif.addFrame(d.main.ctx, {copy: true, delay: 30});
+        } else if (color_total > 720 && !gifDone) {
+            gif.render()
+            gifDone = true
+        }
     }
 
     self.draw = function () {
@@ -59,7 +81,7 @@ var PRG_RAINBOWS = function () {
             d.ctx.translate(width_2 + x_offset, height_2 + y_offset);
             d.ctx.rotate(rotation);
             var wack = (menu.data.wack / 100) / steps
-            d.ctx.scale(scale * (Math.sin(_t / 1000) * wack + 1), scale * (Math.cos(_t / 1000) * wack + 1));
+            d.ctx.scale(scale * (Math.sin(_t / 800) * wack + 1), scale * (Math.cos(_t / 800) * wack + 1));
             d.ctx.drawImage(d.main.canvas, -width_2 - x_offset, -height_2 - y_offset);
             d.ctx.restore();
 
@@ -76,13 +98,16 @@ var PRG_RAINBOWS = function () {
         }
 
         if (menu.data.text) {
-            var text_x = Math.round(Math.sin(t / 800) * width_2 / 2) + width_2
-            var text_y = height - Math.round(Math.abs(Math.sin(t / 260)) * 50) - 16
-            rainbow_text('\x03 rainbows \x03', text_x, text_y)
+            // var text_x = Math.round(Math.sin(t / 800) * width_2 / 2) + width_2
+            // var text_y = height - Math.round(Math.abs(Math.sin(t / 260)) * 50) - 16
+            // rainbow_text('\x03 rainbows \x03', text_x, text_y)
+            var text_x = Math.round(width_2)
+            var text_y = Math.round(height_2)
+            large_rainbow_text('HECK!', text_x, text_y)
         }
 
-        if (t < 3000) {
-            rainbow_text('press enter for menu!', width_2, 8)
+        if (t < 800) {
+            // rainbow_text('press enter for menu!', width_2, 8)
         }
 
         menu.draw(d)
@@ -103,9 +128,25 @@ var PRG_RAINBOWS = function () {
         d.text(text, x - center_x, y)
     }
 
-    var color_current = 0;
+    function large_rainbow_text(text, x, y) {
+        var center_x = Math.floor((text.length - 1) * 9 / 2)
+        d.ctx.save()
+        d.ctx.translate(x - center_x, y - 3)
+        d.text_color('#000')
+        d.text(text, -1, 0)
+        d.text(text, 1, 0)
+        d.text(text, 0, -1)
+        d.text(text, 0, 1)
+        d.text_color(color_str((color_current) % 360, 1, 0.5))
+        d.text(text, 0, 0)
+        d.ctx.restore()
+    }
+
+    var color_current = 0
+    var color_total = 0
     function color_increment(dt) {
-        color_current = (color_current + dt / 10) % 360;
+        color_total = (color_total + dt / 10);
+        color_current = color_total % 360
     }
 
     function color_str(h, s, l) {

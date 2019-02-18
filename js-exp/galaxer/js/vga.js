@@ -32,9 +32,9 @@ var VGA = function () {
     // display modes
     var modes = [
         {
-            width: 160,
-            height: 120,
-            scale: 4,
+            width: 50,
+            height: 50,
+            scale: 8,
             text: false
         },
         {
@@ -52,7 +52,7 @@ var VGA = function () {
         {
             width: 1280,
             height: 960,
-            scale: 0.5,
+            scale: 1,
             text: false
         },
         {
@@ -159,8 +159,10 @@ var VGA = function () {
         self.width = mode.width
         self.height = mode.height
 
-        set_size(self.main, mode.width, mode.height)
-        set_size(self.overlay, mode.width, mode.height)
+        set_size(self.main, mode.width, mode.height, mode.scale)
+        set_size(self.overlay, mode.width, mode.height, mode.scale)
+        display.canvas.style.width = mode.width * mode.scale + 'px'
+        display.canvas.style.height = mode.height * mode.scale + 'px'
     }
 
     self.present = function () {
@@ -239,7 +241,7 @@ var VGA = function () {
         }
     }
 
-    function set_size(canvas, width, height) {
+    function set_size(canvas, width, height, scale) {
         canvas.canvas.width = width
         canvas.canvas.height = height
         canvas.width = width

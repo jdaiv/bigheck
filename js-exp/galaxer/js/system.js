@@ -17,7 +17,7 @@ var PANIC_EXPRESS = function () {
     self.init = function () {
         window.requestAnimationFrame(self.loop)
         window.addEventListener('keydown', function (evt) {
-            /*if (evt.code == 'Digit0') {
+            if (evt.code == 'Digit0') {
                 vga.set_mode(0)
                 evt.stopImmediatePropagation()
             } else if (evt.code == 'Digit1') {
@@ -29,7 +29,7 @@ var PANIC_EXPRESS = function () {
             } else if (evt.code == 'Digit3') {
                 vga.set_mode(3)
                 evt.stopImmediatePropagation()
-            } else */if (evt.code == 'Backslash') {
+            } else if (evt.code == 'Backslash') {
                 self.set_error(self.current_program, 'break')
             } else if (self.error && evt.code == 'Escape') {
                 self.error = false

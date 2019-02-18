@@ -62,7 +62,7 @@
                 e.preventDefault()
                 try {
                     input.classList.remove('error')
-                    formula = new Function('t', 'return ' + input.value)
+                    formula = new Function('t', 'return (' + input.value + ')')
                 } catch (e) {
                     input.classList.add('error')
                 }

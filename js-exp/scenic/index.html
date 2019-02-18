@@ -1,0 +1,70 @@
+<html>
+
+    <head>
+        <title>Scenic</title>
+        <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Consolas', 'Menlo', 'Monaco', 'Bitstream Vera Sans Mono', 'DejaVu Sans Mono', 'Courier New', monospace;
+            color: #333;
+            background: #000;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        #container {
+            width: 600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        input, canvas {
+            border: 1px #333 solid;
+            box-shadow: 4px 4px 0 rgba(255, 255, 255, 0.1);
+        }
+        canvas {
+            display: block;
+            image-rendering: pixelated;
+            width: 600px;
+            height: 600px;
+        }
+
+        input {
+            display: block;
+            outline: 0;
+            font-family: 'Consolas', 'Menlo', 'Monaco', 'Bitstream Vera Sans Mono', 'DejaVu Sans Mono', 'Courier New', monospace;
+            background: none;
+            padding: 1rem;
+            font-size: 16px;
+            line-height: 1;
+            width: 600px;
+            color: #fff;
+            margin-top: 1rem;
+        }
+
+        input[type=submit]:hover {
+            color: #000;
+            background: #fff;
+        }
+
+        input.error {
+            color: #f00;
+        }
+        </style>
+    </head>
+
+    <body>
+        <div id="container">
+            <canvas id="canvas" width="200" height="200"></canvas>
+            <form>
+                <input id="formula" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                <input type="submit" value="Eval">
+            </form>
+            <script src="script.js"></script>
+        </div>
+    </body>
+
+</html>
