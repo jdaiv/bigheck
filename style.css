@@ -7,9 +7,9 @@ html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}bo
 
 body {
     font-family: 'Consolas', 'Menlo', 'Monaco', 'Bitstream Vera Sans Mono', 'DejaVu Sans Mono', 'Courier New', monospace;
-    color: rgba(0, 255, 0, 0.9);
-    background: #000;
-    padding: 1rem 2rem 128px 2rem;
+    color: #E1EFFF;
+    background: rgb(25, 53, 73);
+    padding: 1rem 0;
     font-size: 16px;
 }
 
@@ -17,7 +17,6 @@ p {
     font-size: 1rem;
     line-height: 1.5rem;
     margin: 1rem 0;
-    max-width: 800px;
 }
 
 h3 + p {
@@ -25,10 +24,9 @@ h3 + p {
 }
 
 a {
-    color: #0f0;
+    color: rgb(255, 198, 0);
     text-decoration: none;
-    background: rgba(0, 255, 0, 0.2);
-    border-bottom: 1px #0f0 solid;
+    border-bottom: 1px rgb(255, 198, 0) solid;
     padding: 2px 2px 1px 2px;
     margin: -2px 0;
     line-height: 1rem;
@@ -37,27 +35,28 @@ a {
 }
 
 a:hover {
-    color: #000;
-    background: rgba(0, 255, 0, 1);
+    /* color: rgb(25, 53, 73); */
+    background: rgb(0, 136, 255);
     margin: -4px -2px;
     padding: 4px 4px 3px 4px;
 }
 
 a:active {
-    color: #000;
-    background: rgba(0, 255, 0, 1);
+    /* color: rgb(25, 53, 73); */
+    background: rgb(0, 136, 255);
     margin: 0;
     padding: 0;
     border: 0;
 }
 
 hr {
-    border: 1px #0a0 solid;
-    margin: 2rem 0;
+    border: 0;
+    border-top: 1px rgb(0, 136, 255) solid;
+    margin: 2rem 1rem;
 }
 
 h1 {
-    color: rgba(0, 255, 0, 1);
+    color: rgb(128, 255, 187);
     font-size: 4rem;
     line-height: 3.5rem;
     text-transform: uppercase;
@@ -65,6 +64,7 @@ h1 {
 }
 
 h1 > small {
+    color: rgb(255, 157, 0);
     font-size: 2rem;
     display: block;
     line-height: 2rem;
@@ -72,7 +72,7 @@ h1 > small {
 }
 
 h2 {
-    color: rgba(0, 255, 0, 1);
+    color: rgb(158, 255, 255);
     font-size: 2rem;
     margin: 1rem 0;
     line-height: 2rem;
@@ -80,17 +80,44 @@ h2 {
     font-weight: normal;
 }
 
-h3.project {
-    color: rgba(0, 255, 0, 1);
+canvas {
+    image-rendering: pixelated;
+}
+
+#container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+header {
+    text-align: center;
+}
+
+.projects {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.projects > .title {
+    margin: 0 1rem;
+}
+
+.project {
+    flex: 1 1 400px;
+    margin: 0 1rem 1rem 1rem;
+}
+
+.project > h3 {
+    color: rgb(158, 255, 255);
     font-size: 1.5rem;
     font-weight: normal;
     line-height: 2rem;
     padding-bottom: 8px;
     margin-bottom: 7px;
-    border-bottom: 1px dotted rgba(0, 255, 0, 0.4);
+    border-bottom: 1px dotted rgb(0, 136, 255);
 }
 
-h3.project > small {
+.project > h3 > small {
     font-size: 1rem;
     font-weight: normal;
     line-height: 1rem;
@@ -99,51 +126,39 @@ h3.project > small {
     padding: 0.5rem 0 0 0.5rem;
 }
 
-dl {
+.project > dl {
     display: flex;
     flex-wrap: wrap;
-    max-width: 800px;
     width: 100%;
     margin: 0;
     line-height: 1.5rem;
 }
 
-dl dt {
+.project > dl > dt {
     min-width: 140px;
     flex: 20%;
     padding: 2px;
     margin: 0;
     font-style: italic;
     font-weight: bold;
-    color: rgba(0, 255, 0, 0.5);
+    color: rgb(255, 238, 128);
 }
 
-dl dd {
+.project > dl > dd {
     flex: 1 1 80%;
     padding: 2px;
     margin: 0;
 }
 
-div#my-boy {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    height: 192px;
-    pointer-events: none;
-    background: linear-gradient(
-        rgba(0, 0, 0, 0),
-        rgba(0, 0, 0, 0.5) 25%,
-        rgba(0, 0, 0, 1) 75%
-        );
+.otherstuff {
+    margin: 0 1rem;
 }
 
-div#railroad {
-    width: 100%;
-    height: 96px;
+.note {
+    color: rgb(58, 217, 0);
+    font-size: 0.75rem;
 }
 
-canvas {
-    image-rendering: pixelated;
+.center {
+    text-align: center;
 }
