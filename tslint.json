@@ -1,0 +1,28 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:recommended"
+    ],
+    "jsRules": {},
+    "rules": {
+        "semicolon": [true, "never"],
+        "quotemark": [true, "single", "jsx-double"],
+        "curly": false,
+        "trailing-comma": false,
+        "member-ordering": false,
+        "no-var-requires": false,
+        "max-classes-per-file": false,
+        "forin": false,
+        "object-literal-sort-keys": false,
+        "arrow-parens": false,
+        "no-console": false,
+        "prefer-for-of": false
+    },
+    "rulesDirectory": [],
+    "linterOptions": {
+        "exclude": [
+            "src/config/**.*",
+            "src/**/*.css.d.ts"
+        ]
+    }
+}
