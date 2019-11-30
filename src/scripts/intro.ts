@@ -12,7 +12,7 @@ SCRIPTS.set('backToStartNope', [
 
 SCRIPTS.set('introActions', [
     ['actions', [
-        ['^e🧔 about me', 'about'],
+        ['^e👨‍💻 about me', 'about'],
         ['^e🧩 my projects', 'projects'],
         ['^e💌 how to contact me', 'contact']]
     ]

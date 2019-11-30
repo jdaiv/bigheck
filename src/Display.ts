@@ -38,6 +38,15 @@ export default class Display {
         return null
     }
 
+    public static addLink(content: string, link: string) {
+        const p = document.createElement('p')
+        const el = new Text(p, 'a')
+        el.el.setAttribute('href', link)
+        el.addText(content)
+        Display.lastEl = el
+        contentDiv.appendChild(p)
+    }
+
     public static addActions(terminal: Terminal, actions: any[]) {
         const el = document.createElement('div')
         el.className = 'actions'

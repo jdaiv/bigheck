@@ -192,7 +192,7 @@ footer {
 /* TEXT MODIFIERS */
 
 .m-emoji {
-    font-family: sans-serif;
+    font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji';
 }
 
 .m-italics {

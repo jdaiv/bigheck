@@ -51,7 +51,7 @@ export default class Terminal {
         const script = SCRIPTS.get(scriptName)
         for (const line of script) {
             let slow = false
-            let append = false
+            let type = false
             switch (line[0]) {
                 case 'wait':
                     yield line[1]
@@ -65,26 +65,19 @@ export default class Terminal {
                 case 'type_append_slow':
                     slow = true
                 case 'type_append':
-                    append = true
+                    type = true
+                    break
                 case 'type_slow':
-                    if (line[0] !== 'type_append') {
-                        slow = true
-                    }
+                    slow = true
+                    type = true
+                    break
                 case 'type':
-                    if (!append) {
-                        Display.addMessage('')
-                    }
-                    const typer = Display.appendMessageGenerator(line[1])
-                    if (typer == null) {
-                        break
-                    }
-                    while (true) {
-                        const result = typer.next()
-                        if (result.done) {
-                            break
-                        }
-                        yield this.getPause(slow)
-                    }
+                    Display.addMessage('')
+                    type = true
+                    break
+                case 'link':
+                    Display.addLink('', line[2])
+                    type = true
                     break
                 case 'actions':
                     Display.addActions(this, line[1])
@@ -93,6 +86,19 @@ export default class Terminal {
                     this.activeScript = this.script(line[1])
                     yield 0
                     break
+            }
+            if (type) {
+                const typer = Display.appendMessageGenerator(line[1])
+                if (typer == null) {
+                    break
+                }
+                while (true) {
+                    const result = typer.next()
+                    if (result.done) {
+                        break
+                    }
+                    yield this.getPause(slow)
+                }
             }
         }
     }
