@@ -123,9 +123,6 @@ class Text {
             case '7':
                 this.modStack.push('m-color7')
                 break
-            case 'e':
-                this.modStack.push('m-emoji')
-                break
             case 'b':
                 this.modStack.push('m-bold')
                 break
@@ -146,19 +143,13 @@ class Text {
 
     public addText(text: string) {
         let span = this.getSpan()
-        for (let i = 0; i < text.length; i++) {
-            const char = text[i]
+        const split = [...text]
+        for (let i = 0; i < split.length; i++) {
+            const char = split[i]
             if (char === '^') {
-                const mod = text[++i]
+                const mod = split[++i]
                 this.addMod(mod)
                 span = this.getSpan()
-                if (mod === 'e') {
-                    while (i < text.length - 1 && text[i + 1] !== ' ') {
-                        span.textContent += text[++i]
-                    }
-                    this.popMod()
-                    span = this.getSpan()
-                }
             } else {
                 span.textContent += char
             }
@@ -167,19 +158,13 @@ class Text {
 
     public *addTextYield(text: string): Iterator<null> {
         let span = this.getSpan()
-        for (let i = 0; i < text.length; i++) {
-            const char = text[i]
+        const split = [...text]
+        for (let i = 0; i < split.length; i++) {
+            const char = split[i]
             if (char === '^') {
-                const mod = text[++i]
+                const mod = split[++i]
                 this.addMod(mod)
                 span = this.getSpan()
-                if (mod === 'e') {
-                    while (i < text.length - 1 && text[i + 1] !== ' ') {
-                        span.textContent += text[++i]
-                    }
-                    this.popMod()
-                    span = this.getSpan()
-                }
             } else {
                 span.textContent += char
             }
