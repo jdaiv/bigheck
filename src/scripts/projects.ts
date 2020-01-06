@@ -18,7 +18,7 @@ SCRIPTS.set('projectsActions', [
         ['📍 this site', 'thisSite'],
         ['⚔ multiplayer experiments', 'multiplayerExp'],
         ['🗑 other personal stuff', 'personalStuff'],
-        ['💸 paid projects', 'thisSite'],
+        // ['💸 paid projects', 'thisSite'],
         ['↩ back to the start', 'backToStart']
     ]]
 ])
