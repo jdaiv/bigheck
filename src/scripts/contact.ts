@@ -16,6 +16,6 @@ SCRIPTS.set('contact', [
     ['link', 'contact@bigheck.com', 'mailto:contact@bigheck.com'],
     ['wait', 1000],
     ['newline'],
-    ['type', `Anything else you'd like to know?`],
+    ['type', `Anything else you'd like to know? 😊`],
     ['script', 'introActions']
 ])
