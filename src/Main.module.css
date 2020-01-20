@@ -13,7 +13,7 @@ body {
     font-family: 'Cousine', monospace;
     color: #E1EFFF;
     background: rgb(25, 53, 73);
-    padding: 1rem;
+    padding: 0.5rem;
     height: 100vh;
 }
 
@@ -88,9 +88,8 @@ canvas {
     image-rendering: pixelated;
 }
 
-#container {
+.container {
     width: 100%;
-    max-width: 800px;
     height: 100%;
 
     display: flex;
@@ -101,17 +100,6 @@ canvas {
     border-radius: 4px;
 
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
-}
-
-header {
-    text-align: left;
-    flex: 0;
-    padding: 0.5rem;
-    line-height: 1.5;
-
-    color: rgb(255, 198, 0);
-    background: rgba(0, 0, 0, 0.25);
-    border-bottom: 1px solid rgb(0, 136, 255);
 }
 
 footer {
@@ -126,12 +114,47 @@ footer {
     border-top: 1px solid rgb(0, 136, 255);
 }
 
-#content {
+.content {
     color: white;
     flex: 1;
     padding: 1rem;
-    overflow-x: hidden;
-    overflow-y: scroll;
+    position: relative;
+    overflow: hidden;
+}
+
+.window {
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    width: 500px;
+    height: 500px;
+    border: 1px solid rgb(0, 136, 255);
+    border-radius: 0.5rem;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    background: rgb(25, 53, 73);
+}
+
+.window-title {
+    background: rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgb(0, 136, 255);
+    user-select: none;
+    display: flex;
+    align-items: center;
+}
+
+.window-title > div {
+    flex: 1;
+    padding: 0.5rem;
+    line-height: 1;
+}
+
+.window-title > button {
+    flex: 0;
+    margin: 0.25rem;
+}
+
+#content {
+    overflow: hidden;
 }
 
 #content > pre, #content > p {
@@ -145,7 +168,7 @@ footer {
     transform: translateX(-8px);
 }
 
-#content > .actions > button {
+button {
     font-size: 1rem;
     line-height: 1;
     padding: 0.5rem;
@@ -167,26 +190,40 @@ footer {
     transition: transform 50ms ease, opacity 100ms linear;
 }
 
-#content > .actions > button.selected,
-#content > .actions > button:hover {
+button.selected,
+button:hover {
     background: rgb(0, 136, 255);
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.25);
     transform: translateY(-2px);
 }
 
-#content > .actions > button:active {
+button:active {
     background: rgb(0, 136, 255);
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.25);
     transform: translateY(2px);
 }
 
-#content > .actions > button.disabled,
-#content > .actions > button.selected {
+button.disabled,
+button.selected {
     pointer-events: none;
 }
 
-#content > .actions > button.disabled {
+button.disabled {
     opacity: 0.25;
+}
+
+.dialog-box {
+    text-align: center;
+    margin: 1rem auto;
+    padding: 1rem 3rem;
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgb(0, 136, 255);
+    border-radius: 4px;
+    position: absolute;
+    top: 5rem;
+    left: 25%;
+    right: 25%;
+    z-index: 999;
 }
 
 /* TEXT MODIFIERS */

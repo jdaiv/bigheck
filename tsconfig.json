@@ -1,33 +1,40 @@
 {
-  "compilerOptions": {
-    "experimentalDecorators": true,
-    "outDir": "./public",
-    "target": "es6",
-    "lib": ["dom", "es2015", "es2016"],
-    "module": "commonjs",
-    "noImplicitAny": false,
-    "removeComments": true,
-    "sourceMap": true,
-    "jsx": "react",
-    "jsxFactory": "h",
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "plugins": [
-      {
-        "name": "typescript-tslint-plugin",
-        "alwaysShowRuleFailuresAsWarnings": false,
-        "ignoreDefinitionFiles": true,
-        "configFile": "./tslint.json",
-        "suppressWhileTypeErrorsPresent": false,
-        "mockTypeScriptVersion": false
-      }
+    "compilerOptions": {
+        "experimentalDecorators": true,
+        "outDir": "./public",
+        "target": "es6",
+        "lib": ["dom", "es2015", "es2016"],
+        "module": "commonjs",
+        "noImplicitAny": false,
+        "removeComments": true,
+        "sourceMap": true,
+        "jsx": "react",
+        "jsxFactory": "h",
+        "esModuleInterop": true,
+        "noUnusedLocals": false,
+        "noUnusedParameters": false,
+        "plugins": [
+            {
+                "name": "typescript-tslint-plugin",
+                "alwaysShowRuleFailuresAsWarnings": false,
+                "ignoreDefinitionFiles": true,
+                "configFile": "./tslint.json",
+                "suppressWhileTypeErrorsPresent": false,
+                "mockTypeScriptVersion": false
+            },
+            {
+                "name": "typescript-plugin-css-modules",
+                "classnameTransform": "camelCaseOnly",
+                "postCssOptions": {
+                    "useConfig": true
+                }
+            }
+        ]
+    },
+    "include": [
+        "./src/**/*.css",
+        "./src/**/*.json",
+        "./src/**/*.tsx",
+        "./src/**/*.ts"
     ]
-  },
-  "include": [
-    "./src/**/*.json",
-    "./src/**/*.tsx",
-    "./src/**/*.ts"
-  ]
 }

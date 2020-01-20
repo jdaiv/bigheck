@@ -1,0 +1,33 @@
+
+
+.taskbar {
+    text-align: left;
+    flex: 0;
+    line-height: 1.5;
+
+    color: rgb(255, 198, 0);
+    background: rgba(0, 0, 0, 0.25);
+    border-bottom: 1px solid rgb(0, 136, 255);
+
+    display: flex;
+}
+
+.menu {
+    border-right: 1px solid rgb(0, 136, 255);
+    padding: 0.5rem;
+    /* background: rgba(255, 255, 255, 0.05); */
+}
+
+.apps {
+    flex: 1;
+    padding: 0.5rem;
+}
+
+.status {
+    border-left: 1px solid rgb(0, 136, 255);
+    padding: 0.5rem;
+}
+
+.status > button {
+    width: 3rem;
+}
