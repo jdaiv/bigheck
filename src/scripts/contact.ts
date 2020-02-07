@@ -12,10 +12,6 @@ SCRIPTS.set('contact', [
     ['link', 'LinkedIn', 'https://www.linkedin.com/in/jdaiv/'],
     ['wait', 1000],
     ['newline'],
-    ['type', 'Or you could even just email me:'],
-    ['link', 'contact@bigheck.com', 'mailto:contact@bigheck.com'],
-    ['wait', 1000],
-    ['newline'],
     ['type', `Anything else you'd like to know?`],
     ['script', 'introActions']
 ])
