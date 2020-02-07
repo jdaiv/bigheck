@@ -15,11 +15,11 @@ SCRIPTS.set('projects', [
 
 SCRIPTS.set('projectsActions', [
     ['actions', [
-        ['📍 this site', 'thisSite'],
-        ['⚔ multiplayer experiments', 'multiplayerExp'],
-        ['🗑 other personal stuff', 'personalStuff'],
+        ['^e📍 this site', 'thisSite'],
+        ['^e⚔ multiplayer experiments', 'multiplayerExp'],
+        ['^e🗑 other personal stuff', 'personalStuff'],
         // ['💸 paid projects', 'thisSite'],
-        ['↩ back to the start', 'backToStart']
+        ['^e↩ back to the start', 'backToStart']
     ]]
 ])
 
@@ -36,39 +36,39 @@ SCRIPTS.set('thisSite', [
     ['newline'],
     ['type', `This site was a real struggle to design... `],
     ['wait', 500],
-    ['type_append', `From the start I knew I wanted a, uh, ^iexploration focussed^n style? 🤔`],
+    ['type_append', `From the start I knew I wanted a, uh, ^iexploration focussed^n style? ^e🤔`],
     ['wait', 2000],
     ['newline'],
     ['type', `I started with a faux terminal, complete with a mock file system and command parser. `],
     ['wait', 500],
-    ['type_append', `But I knew I needed the site to be mobile friendly, and the UI challenges were too great for a ^bfun^n project. 😔`],
+    ['type_append', `But I knew I needed the site to be mobile friendly, and the UI challenges were too great for a ^bfun^n project. ^e😔`],
     ['wait', 1000],
     ['newline'],
     ['type', `So I stripped it all back and started again with a focus on something more touch friendly.`],
     ['wait', 2000],
     ['newline'],
-    ['type', `Eventually I arrived at branching dialog choices. 💬`],
+    ['type', `Eventually I arrived at branching dialog choices. ^e💬`],
     ['wait', 500],
     ['newline'],
     ['type', `It provided the same "exploration" feel as the faux terminal, `],
-    ['type_append', `without the potential accessibilty issues for mobile or less experienced users. ✨`],
+    ['type_append', `without the potential accessibilty issues for mobile or less experienced users. ^e✨`],
     ['wait', 2000],
     ['newline'],
     ['type', `Technology-wise the site is pretty basic. No frameworks or complex code.`],
     ['wait', 1000],
     ['newline'],
-    ['type', `All written in TypeScript, packaged with Parcel, and sent off to Netify to be served to you!`],
+    ['type', `All written in TypeScript, packaged with Parcel, and sent off to Netlify to be served to you!`],
     ['wait', 500],
     ['newline'],
     ['type', `Not much more to say about it really. The scripts you're reading are pretty basic, bare minimum really.`],
     ['wait', 500],
-    ['type_append', ` I've left sourcemaps enabled if you want to poke around and laugh at my code. 😅`],
+    ['type_append', ` I've left sourcemaps enabled if you want to poke around and laugh at my code. ^e😅`],
     ['wait', 1000],
     ['newline'],
     ['type', `Are there any other projects you'd like to see?`],
     ['actions', [
-        ['✔ yep', 'projectsBack'],
-        ['❌ nope', 'backToStartNope']
+        ['^e✔ yep', 'projectsBack'],
+        ['^e❌ nope', 'backToStartNope']
     ]]
 ])
 
@@ -77,7 +77,7 @@ SCRIPTS.set('multiplayerExp', [
     ['wait', 500],
     ['type', `Oh this one!`],
     ['wait', 500],
-    ['type_append', ` Not quite done yet though. 😕`],
+    ['type_append', ` Not quite done yet though. ^e😕`],
     ['wait', 500],
     ['newline'],
     ['type', `But once I pick up and shake all the dust off, it'll be a small multiplayer lobby to hangout in and mess with a bunch of gadgets together.`],
@@ -85,8 +85,8 @@ SCRIPTS.set('multiplayerExp', [
     ['newline'],
     ['type', `Think there's any other projects you'd like to know about?`],
     ['actions', [
-        ['✔ sure', 'projectsBack'],
-        ['❌ no', 'backToStartNope']
+        ['^e✔ sure', 'projectsBack'],
+        ['^e❌ no', 'backToStartNope']
     ]]
 ])
 
@@ -108,7 +108,7 @@ SCRIPTS.set('personalStuff', [
     ['newline'],
     ['type', `Maybe there's another project you'd like to look at?`],
     ['actions', [
-        ['✔ yeah', 'projectsBack'],
-        ['❌ nah', 'backToStartNope']
+        ['^e✔ yeah', 'projectsBack'],
+        ['^e❌ nah', 'backToStartNope']
     ]]
 ])

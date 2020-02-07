@@ -129,6 +129,9 @@ class Text {
             case 'i':
                 this.modStack.push('m-italics')
                 break
+            case 'e':
+                this.modStack.push('m-emoji')
+                break
             case 'n':
                 this.modStack = []
                 break
@@ -144,14 +147,22 @@ class Text {
     public addText(text: string) {
         let span = this.getSpan()
         const split = [...text]
+        let popNext = false
         for (let i = 0; i < split.length; i++) {
             const char = split[i]
             if (char === '^') {
                 const mod = split[++i]
                 this.addMod(mod)
                 span = this.getSpan()
+                if (mod === 'e') {
+                    popNext = true
+                }
             } else {
                 span.textContent += char
+                if (popNext) {
+                    this.popMod()
+                    popNext = false
+                }
             }
         }
     }
@@ -159,14 +170,22 @@ class Text {
     public *addTextYield(text: string): Iterator<null> {
         let span = this.getSpan()
         const split = [...text]
+        let popNext = false
         for (let i = 0; i < split.length; i++) {
             const char = split[i]
             if (char === '^') {
                 const mod = split[++i]
                 this.addMod(mod)
                 span = this.getSpan()
+                if (mod === 'e') {
+                    popNext = true
+                }
             } else {
                 span.textContent += char
+                if (popNext) {
+                    this.popMod()
+                    popNext = false
+                }
             }
             yield
         }

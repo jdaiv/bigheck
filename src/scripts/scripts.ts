@@ -4,7 +4,7 @@ const error =  [
     ['newline'],
     ['type', `Oh no, an error occured!`],
     ['newline'],
-    ['type', `😖 Well, this is awkward. I don't have this part scripted.
+    ['type', `^e😖 Well, this is awkward. I don't have this part scripted.
  You might get something from the console though!`],
     ['wait', 500],
     ['newline'],

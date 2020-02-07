@@ -11,8 +11,8 @@ SCRIPTS.set('about', [
     ['newline'],
     ['type', `Any specifics you'd like to know?`],
     ['actions', [
-        ['⏳ my history', 'history'],
-        ['↩ back to the start', 'backToStart']
+        ['^e⏳ my history', 'history'],
+        ['^e↩ back to the start', 'backToStart']
     ]]
 ])
 

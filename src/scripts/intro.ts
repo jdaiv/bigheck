@@ -12,15 +12,15 @@ SCRIPTS.set('backToStartNope', [
 
 SCRIPTS.set('introActions', [
     ['actions', [
-        ['👨‍💻 about me', 'about'],
-        ['🧩 my projects', 'projects'],
-        ['💌 how to contact me', 'contact']]
+        ['^e👨‍💻 about me', 'about'],
+        ['^e🧩 my projects', 'projects'],
+        ['^e💌 how to contact me', 'contact']]
     ]
 ])
 
 SCRIPTS.set('intro', [
     ['title', 'introduction'],
-    ['type', '👋 ^bHi there stranger!'],
+    ['type', '^e👋 ^bHi there stranger!'],
     ['newline'],
     ['wait', 500],
     ['type', `Name's John, and this is my homepage!`],
@@ -30,6 +30,6 @@ SCRIPTS.set('intro', [
     ['type_append_slow', '...'],
     ['wait', 250],
     ['newline'],
-    ['type', 'So uh, what would you like to know? 🤔'],
+    ['type', 'So uh, what would you like to know? ^e🤔'],
     ['script', 'introActions']
 ])
