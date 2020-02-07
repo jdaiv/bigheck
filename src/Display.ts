@@ -162,6 +162,7 @@ class Text {
                 if (popNext) {
                     this.popMod()
                     popNext = false
+                    span = this.getSpan()
                 }
             }
         }
@@ -185,6 +186,7 @@ class Text {
                 if (popNext) {
                     this.popMod()
                     popNext = false
+                    span = this.getSpan()
                 }
             }
             yield
