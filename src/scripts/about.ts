@@ -46,6 +46,6 @@ SCRIPTS.set('history', [
     ['newline'],
     ['type', `Anything else you'd like to know about me?`],
     ['actions', [
-        ['↩ back to the start', 'backToStart']
+        ['^e↩ back to the start', 'backToStart']
     ]]
 ])

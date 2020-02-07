@@ -1,5 +1,7 @@
 import Terminal from './Terminal'
 
+const CHAR_ZWJ = 0x200D
+
 const titleSpan = document.getElementById('title')
 const contentDiv = document.getElementById('content')
 
@@ -160,6 +162,12 @@ class Text {
             } else {
                 span.textContent += char
                 if (popNext) {
+                    if (i < split.length - 1) {
+                        if (char.charCodeAt(0) === CHAR_ZWJ ||
+                            split[i + 1].charCodeAt(0) === CHAR_ZWJ) {
+                            continue
+                        }
+                    }
                     this.popMod()
                     popNext = false
                     span = this.getSpan()
@@ -184,6 +192,12 @@ class Text {
             } else {
                 span.textContent += char
                 if (popNext) {
+                    if (i < split.length - 1) {
+                        if (char.charCodeAt(0) === CHAR_ZWJ ||
+                            split[i + 1].charCodeAt(0) === CHAR_ZWJ) {
+                            continue
+                        }
+                    }
                     this.popMod()
                     popNext = false
                     span = this.getSpan()
